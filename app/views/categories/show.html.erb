@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>
+
+
+
+<h1>Listing documents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Body</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @category.documents.each do |document| %>
+      <tr>
+        <td><%= document.name %></td>
+        <td><%= document.body %></td>
+        <td><%= link_to 'Show', category_document_path(@category.id, document.id) %></td>
+        <td><%= link_to 'Edit', edit_category_document_path(@category.id, document.id) %></td>
+        <td><%= link_to 'Destroy', category_document_path(@category.id, document.id) , method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Document', new_category_document_path(@category.id) %>
