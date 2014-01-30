@@ -12,10 +12,11 @@
     <% end %>
   </ul>
 
-<br>
 
 <%= link_to 'New Category', new_category_path %>
 <br>
+<br>
+<p>Paste text in below to classify</p>
 <textarea id="unclassified-doc" class="form-control" rows="3"></textarea>
 <button id="classify-doc" class="btn btn-primary">Classify Doc</button>
 <div id="document-percent" class="alert alert-success" style="display:none"></div>
