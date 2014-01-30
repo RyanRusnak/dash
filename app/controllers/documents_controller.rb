@@ -44,7 +44,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
+        format.html { redirect_to category_document_path(@category, @document), notice: 'Document was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -58,7 +58,7 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to category_document_paths(@category) }
+      format.html { redirect_to category_path(@category) }
       format.json { head :no_content }
     end
   end
