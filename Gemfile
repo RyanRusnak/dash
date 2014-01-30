@@ -8,6 +8,7 @@ gem 'rails', '4.0.0'
 gem 'redis'
 
 gem 'mongoid'
+gem 'bson_ext'
 gem 'nbayes'
 
 # Use SCSS for stylesheets
