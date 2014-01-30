@@ -1,27 +1,34 @@
-<h1>Listing categories</h1>
+<h1>Listing categories <small>These are the buckets</small></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
+  <ul>
     <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <li>
+        <h4>
+          <%= link_to category.name , category %>
+          <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_category_path(category) %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, category, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </h4>
+      </li>
     <% end %>
-  </tbody>
-</table>
+  </ul>
 
 <br>
 
 <%= link_to 'New Category', new_category_path %>
+<br>
+<textarea id="unclassified-doc" class="form-control" rows="3"></textarea>
+<button id="classify-doc" class="btn btn-primary">Classify Doc</button>
+<div id="document-percent" class="alert alert-success"></div>
+
+<script type="text/javascript">
+  $("#classify-doc").click(function(event) {
+    var docText = $("#unclassified-doc").val();
+    $.get( "/classify_document", {'doc':docText},function( data ) {
+      var probability = jQuery.parseJSON(data['probability']);
+      var message = data['max_class'] + ' with ' + probability[data['max_class']].toFixed(2)*100 + '% confidence.';
+      $("#document-percent").text(message);
+    });
+  });
+</script>
+
+

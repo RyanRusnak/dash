@@ -1,40 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @category.name %>
-</p>
 
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+  <h3><%= @category.name %> <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_category_path(@category) %> </h3>
+  <%= link_to 'Back', categories_path %>
 
 
 
 <h1>Listing documents</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Body</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
+  <ul>
     <% @category.documents.each do |document| %>
-      <tr>
-        <td><%= document.name %></td>
-        <td><%= document.body %></td>
-        <td><%= link_to 'Show', category_document_path(@category.id, document.id) %></td>
-        <td><%= link_to 'Edit', edit_category_document_path(@category.id, document.id) %></td>
-        <td><%= link_to 'Destroy', category_document_path(@category.id, document.id) , method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <li>
+          <%= link_to document.name , category_document_path(@category.id, document.id) %>
+          <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_category_document_path(@category.id, document.id) %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, category_document_path(@category.id, document.id) , method: :delete, data: { confirm: 'Are you sure?' } %>
+      </li>
     <% end %>
-  </tbody>
-</table>
+    </ul>
 
 <br>
 

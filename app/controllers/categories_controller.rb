@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+
+
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   # GET /categories
@@ -61,6 +63,24 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def classify_document
+    nb = NBayes::Base.new
+
+    Category.all.each do |cat| 
+      cat.documents.each do |doc|
+        nb.train(doc.body.split(/\s+/), cat.name )
+      end
+    end 
+
+    doc = params[:doc].to_s.split(/\s+/)
+    result = nb.classify(doc)
+
+    classify_hash = {:max_class=> result.max_class, :probability => result.to_json}
+    respond_to do |format|
+        format.json { render json: classify_hash.to_json }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
@@ -71,4 +91,5 @@ class CategoriesController < ApplicationController
     def category_params
       params.require(:category).permit(:name)
     end
+
 end

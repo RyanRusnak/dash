@@ -6,6 +6,7 @@ gem 'rails', '4.0.0'
 gem 'redis'
 
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
+gem 'nbayes'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -31,6 +32,11 @@ gem 'jbuilder', '~> 1.2'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0.beta'
+  gem 'database_cleaner'
 end
 
 # Use ActiveModel has_secure_password

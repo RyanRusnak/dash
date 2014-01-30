@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update]
+  before_action :set_category, except: []
   before_action :set_document, only: [:show, :edit, :update, :destroy]
   
 
@@ -30,7 +30,7 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, notice: 'Document was successfully created.' }
+        format.html { redirect_to category_document_path(@category, @document), notice: 'Document was successfully created.' }
         format.json { render action: 'show', status: :created, location: @document }
       else
         format.html { render action: 'new' }
@@ -58,7 +58,7 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to documents_url }
+      format.html { redirect_to category_document_paths(@category) }
       format.json { head :no_content }
     end
   end

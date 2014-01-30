@@ -1,29 +1,18 @@
-<h1>Listing documents</h1>
+<h1>Listing documents <small>These are the buckets</small></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Body</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
+  <ul>
     <% @documents.each do |document| %>
-      <tr>
-        <td><%= document.name %></td>
-        <td><%= document.body %></td>
-        <td><%= link_to 'Show', document %></td>
-        <td><%= link_to 'Edit', edit_document_path(document) %></td>
-        <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <li>
+        <h4>
+          <%= link_to document.name, document %>
+          <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_document_path(document) %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, document, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <h4>
+      </li>
     <% end %>
-  </tbody>
-</table>
+</ul>
 
 <br>
 
 <%= link_to 'New Document', new_document_path %>
+
