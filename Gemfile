@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
 
+ruby '2.0.0'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
 gem 'redis'
 
-gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
+gem 'mongoid'
 gem 'nbayes'
 
 # Use SCSS for stylesheets
@@ -39,6 +41,7 @@ group :development, :test do
   gem 'database_cleaner'
 end
 
+gem 'rails_12factor', group: :production
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
