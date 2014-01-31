@@ -31,7 +31,7 @@ describe CategoriesController do
 		params = {}
 		params[:doc] = tokens
 		params[:format] = :json
-	    get "classify_document", params
+	    post "classify_document", params
 	    tokens = tokens.split(/\s+/)
 	    result = nbayes.classify(tokens)
 

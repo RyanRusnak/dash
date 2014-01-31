@@ -4,7 +4,7 @@ Classify::Application.routes.draw do
     resources :documents
   end
 
-  get '/classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
+  post '/classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
 
 
   # The priority is based upon order of creation: first created -> highest priority.

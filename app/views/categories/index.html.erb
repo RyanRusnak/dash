@@ -24,11 +24,21 @@
 <script type="text/javascript">
   $("#classify-doc").click(function(event) {
     var docText = $("#unclassified-doc").val();
-    $.get( "/classify_document", {'doc':docText},function( data ) {
+
+    $.ajax({
+      type: "POST",
+      url: "/classify_document",
+      data: docText
+    }).done(function(data){
       var probability = jQuery.parseJSON(data['probability']);
       var message = data['max_class'] + ' with ' + probability[data['max_class']].toFixed(2)*100 + '% confidence.';
       $("#document-percent").show();
       $("#document-percent").text(message);
+    }).fail(function(){
+      $("#document-percent").removeClass('alert-success');
+      $("#document-percent").addClass('alert-warning');
+      $("#document-percent").show();
+      $("#document-percent").text("Something went wrong");
     });
   });
 </script>
