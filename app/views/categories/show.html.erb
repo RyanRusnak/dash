@@ -20,3 +20,12 @@
 <br>
 
 <%= link_to 'New Document', new_category_document_path(@category.id) %>
+
+<br>
+
+<h2>Import Documents</h2>
+
+<%= form_tag import_category_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

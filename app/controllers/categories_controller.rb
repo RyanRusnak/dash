@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
 
 
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: [:show, :edit, :update, :destroy, :import]
 
   # GET /categories
   # GET /categories.json
@@ -79,6 +79,11 @@ class CategoriesController < ApplicationController
     respond_to do |format|
         format.json { render json: classify_hash.to_json }
     end
+  end
+
+  def import
+    Category.import(params[:file], @category)
+    redirect_to category_path(@category), notice: "Documents successfully imported."
   end
 
   private

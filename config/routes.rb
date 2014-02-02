@@ -1,6 +1,10 @@
 Classify::Application.routes.draw do
 
   resources :categories do
+    member do
+      post 'import'
+    end
+
     resources :documents
   end
 
