@@ -28,7 +28,7 @@
     $.ajax({
       type: "POST",
       url: "/classify_document",
-      data: docText
+      data: {'doc' : docText}
     }).done(function(data){
       var probability = jQuery.parseJSON(data['probability']);
       var message = data['max_class'] + ' with ' + probability[data['max_class']].toFixed(2)*100 + '% confidence.';

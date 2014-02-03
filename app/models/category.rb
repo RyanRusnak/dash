@@ -3,7 +3,7 @@ class Category
 
 	require 'csv'
 
-	has_many :documents
+	has_many :documents, :dependent => :destroy
   
 	field :name, type: String
 

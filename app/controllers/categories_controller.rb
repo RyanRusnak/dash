@@ -64,16 +64,23 @@ class CategoriesController < ApplicationController
   end
 
   def classify_document
-    nb = NBayes::Base.new
+    @nbayes = NBayes::Base.new
 
     Category.all.each do |cat| 
       cat.documents.each do |doc|
-        nb.train(doc.body.split(/\s+/), cat.name )
+        @nbayes.train(doc.body.split(/\s+/), cat.name )
       end
     end 
 
+    logger.debug(@nbayes.inspect)
+
     doc = params[:doc].to_s.split(/\s+/)
-    result = nb.classify(doc)
+    logger.debug('-----');
+    logger.debug(params[:doc]);
+    logger.debug(doc.inspect);
+    result = @nbayes.classify(doc)
+
+    logger.debug(result.inspect)
 
     classify_hash = {:max_class=> result.max_class, :probability => result.to_json}
     respond_to do |format|
