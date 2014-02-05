@@ -31,16 +31,28 @@
       data: {'doc' : docText}
     }).done(function(data){
       var probability = jQuery.parseJSON(data['probability']);
-      var message = data['max_class'] + ' with ' + probability[data['max_class']].toFixed(2)*100 + '% confidence.';
+      var message = '<div id="message">'+data['max_class'] + ' with ' + probability[data['max_class']].toFixed(2)*100 + '% confidence. '+
+      '<button id="details" class="btn btn-primary btn-sm">Details</button></div>';
       $("#document-percent").show();
-      $("#document-percent").text(message);
+      $("#document-percent").html(message);
+
+      $("#details").click(function(){
+        var list = '';
+        Object.keys(probability).forEach(function (key) { 
+          var value = probability[key]
+          list += '<li>Confidence of '+ key +' is '+ (value*100).toFixed(2) +'%</li>'
+        })
+        $("#message").append('<ul class="list-unstyled">'+list+'</ul>');
+      }); 
     }).fail(function(){
       $("#document-percent").removeClass('alert-success');
       $("#document-percent").addClass('alert-warning');
       $("#document-percent").show();
       $("#document-percent").text("Something went wrong");
     });
+
   });
+
 </script>
 
 
