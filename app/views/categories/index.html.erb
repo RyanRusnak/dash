@@ -16,6 +16,9 @@
 <%= link_to 'New Category', new_category_path %>
 <br>
 <br>
+<div id="feedback-bar" class="progress progress-striped active" style="display:none">
+  <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+</div>
 <p>Paste text in below to classify</p>
 <textarea id="unclassified-doc" class="form-control" rows="3"></textarea>
 <button id="classify-doc" class="btn btn-primary">Classify Doc</button>
@@ -24,12 +27,13 @@
 <script type="text/javascript">
   $("#classify-doc").click(function(event) {
     var docText = $("#unclassified-doc").val();
-
+    $("#feedback-bar").show();
     $.ajax({
       type: "POST",
       url: "/classify_document",
       data: {'doc' : docText}
     }).done(function(data){
+      $("#feedback-bar").hide();
       var probability = jQuery.parseJSON(data['probability']);
       var message = '<div id="message">'+data['max_class'] + ' with ' + probability[data['max_class']].toFixed(2)*100 + '% confidence. '+
       '<button id="details" class="btn btn-primary btn-sm">Details</button></div>';
