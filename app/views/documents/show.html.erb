@@ -10,5 +10,5 @@
   <%= @document.body %>
 </p>
 
-<%= link_to 'Edit', edit_category_document_path(@category.id, @document.id) %> |
-<%= link_to 'Back', category_path(@category.id) %>
+<%= link_to 'Edit', edit_group_category_document_path(@group.id,@category.id, @document.id) %> |
+<%= link_to 'Back', group_category_path(@group.id, @category.id) %>

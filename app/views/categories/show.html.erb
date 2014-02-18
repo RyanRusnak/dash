@@ -1,31 +1,30 @@
 <p id="notice"><%= notice %></p>
 
 
-  <h3><%=  link_to @category.name, categories_path %> <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_category_path(@category) %> </h3>
+  <h3><%=  link_to @category.name, group_path(@group) %> <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_group_category_path(@group, @category) %> </h3>
 
 
 
 <h1>Listing documents</h1>
-
   <ul>
     <% @category.documents.each do |document| %>
       <li>
-          <%= link_to document.name , category_document_path(@category.id, document.id) %>
-          <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_category_document_path(@category.id, document.id) %>
-          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, category_document_path(@category.id, document.id) , method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to document.name , group_category_document_path(@group, @category.id, document.id) %>
+          <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_group_category_document_path(@group, @category.id, document.id) %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, group_category_document_path(@group, @category.id, document.id) , method: :delete, data: { confirm: 'Are you sure?' } %>
       </li>
     <% end %>
     </ul>
 
 <br>
 
-<%= link_to 'New Document', new_category_document_path(@category.id) %>
+<%= link_to 'New Document', new_group_category_document_path(@group, @category.id) %>
 
 <br>
 
 <h2>Import Documents</h2>
 
-<%= form_tag import_category_path, multipart: true do %>
+<%= form_tag import_group_category_path, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "Import" %>
 <% end %>

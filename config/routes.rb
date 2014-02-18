@@ -1,21 +1,22 @@
 Classify::Application.routes.draw do
 
-  resources :categories do
-    member do
-      post 'import'
+  resources :groups do 
+    resources :categories do
+      member do
+        post 'import'
+      end
+      resources :documents
     end
-
-    resources :documents
   end
 
-  post '/classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
+  post '/groups/:id/classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'categories#index'
+  root 'groups#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

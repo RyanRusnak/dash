@@ -1,0 +1,16 @@
+<h1>Listing groups <small>Each has a different training set</small></h1>
+
+  <ul>
+    <% @groups.each do |group| %>
+      <li>
+        <h4>
+          <%= link_to group.name , group %>
+          <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_group_path(group) %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, group, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </h4>
+      </li>
+    <% end %>
+  </ul>
+
+
+<%= link_to 'New Group', new_group_path %>

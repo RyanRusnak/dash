@@ -1,4 +1,5 @@
 class DocumentsController < ApplicationController
+  before_action :set_group, except: []
   before_action :set_category, except: []
   before_action :set_document, only: [:show, :edit, :update, :destroy]
   
@@ -6,7 +7,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = @category.documents.all
+    @documents = @group.categories.documents.all
   end
 
   # GET /documents/1
@@ -30,7 +31,7 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to category_document_path(@category, @document), notice: 'Document was successfully created.' }
+        format.html { redirect_to group_category_document_path(@group, @category, @document), notice: 'Document was successfully created.' }
         format.json { render action: 'show', status: :created, location: @document }
       else
         format.html { render action: 'new' }
@@ -44,7 +45,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to category_document_path(@category, @document), notice: 'Document was successfully updated.' }
+        format.html { redirect_to group_category_document_path(@group, @category, @document), notice: 'Document was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -58,15 +59,18 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to category_path(@category) }
+      format.html { redirect_to group_category_path(@group, @category) }
       format.json { head :no_content }
     end
   end
 
   private
+    def set_group
+      @group = Group.find(params[:group_id])
+    end
   # Use callbacks to share common setup or constraints between actions.
     def set_category
-      @category = Category.find(params[:category_id])
+      @category = @group.categories.find(params[:category_id])
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_document
