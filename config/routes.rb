@@ -1,6 +1,9 @@
 Classify::Application.routes.draw do
 
   resources :groups do 
+    member do
+      post 'classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
+    end
     resources :categories do
       member do
         post 'import'
@@ -9,7 +12,7 @@ Classify::Application.routes.draw do
     end
   end
 
-  post '/groups/:id/classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
+  # post '/groups/:id/classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
 
 
   # The priority is based upon order of creation: first created -> highest priority.
