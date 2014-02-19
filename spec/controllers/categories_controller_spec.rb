@@ -102,6 +102,32 @@ describe CategoriesController do
 
   it "should only classify within the specified group" do
 
+  	@group_one = Group.create({:name => "Animals"})
+  	@group_two = Group.create({:name => "Humans"})
+
+	c1 = @group_one.categories.create({:name => 'Cats'})
+		c1.documents.create({:name => 'doc1', :body => 'I love kittens'})
+	c2 = @group_one.categories.create({:name => 'Dogs'})
+		c2.documents.create({:name => 'doc3', :body => 'I am all about dogs'})
+	c3 = @group_two.categories.create({:name => 'Guys'})
+		c3.documents.create({:name => 'doc5', :body => 'Jeff Bill Fred'})
+	c4 = @group_two.categories.create({:name => 'Girls'})
+		c4.documents.create({:name => 'doc5', :body => 'Kate Kirby Mary'})
+
+      # create new classifier instance
+	nbayes = NBayes::Base.new
+	# train it - notice split method used to tokenize text (more on that below)
+	nbayes.train( c3.documents[0].body.split(/\s+/), c3.name )
+	nbayes.train( c4.documents[0].body.split(/\s+/), c4.name )
+	
+	tokens = "Bill Jeff Fred"
+
+    post :classify_document, :id => @group_two.id, :format => :json, :doc => tokens
+    tokens = tokens.split(/\s+/)
+    result = nbayes.classify(tokens)
+
+    expect(JSON.parse(response.body)['probability']).to eq(result.to_json)
+
   end
 
   it "should be successful" do
