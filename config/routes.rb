@@ -12,6 +12,8 @@ Classify::Application.routes.draw do
     end
   end
 
+  resources :codes
+
   # post '/groups/:id/classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
 
 
@@ -19,7 +21,7 @@ Classify::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'groups#index'
+  # root 'groups#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -7,7 +7,28 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = @group.categories.documents.all
+    @documents = @category.documents.all
+
+    case params[:type]
+      when "year_expiring"
+        @documents = Document.short_list(@documents, "project_period_end_date")
+      when "year_expiring_verbose"
+        @documents = @documents.group_by{|document|
+          document.project_period_end_date.to_date.year rescue nil
+        }
+      when "year_starting"
+        @documents = Document.short_list(@documents, "project_period_start_date")
+      when "year_starting_verbose"
+        @documents = @documents.group_by{|document|
+          document.project_period_start_date.to_date.year rescue nil
+        }
+      when "paginate"
+        @documents = @documents.all.take(100)
+      else 
+        
+      end
+
+    render json: @documents
   end
 
   # GET /documents/1
@@ -79,6 +100,6 @@ class DocumentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params.require(:document).permit(:name, :body)
+      params.require(:document).permit(:name, :body, :type)
     end
 end

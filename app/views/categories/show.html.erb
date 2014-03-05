@@ -1,5 +1,33 @@
 <p id="notice"><%= notice %></p>
 
+<div class="gridster">
+  <ul class="list-unstyled">
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="2">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Number of Projects by year</h3></div>
+        <div class="panel-body"><div id="chart" class="chart bar" data-id="expiring"><svg style="height:200px; width:200px;"></svg></div></div>
+      </div>
+    </li>
+    <li data-row="1" data-col="2" data-sizex="2" data-sizey="2">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Number of Projects by year</h3></div>
+        <div class="panel-body"><div id="chart2" class="chart donut" data-id="expiring"><svg style="height:200px;"></svg></div></div>
+      </div>
+    </li>
+    <li data-row="2" data-col="1" data-sizex="2" data-sizey="2">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Number of Projects by year</h3></div>
+        <div class="panel-body"><div id="chart3" class="chart pie" data-id="expiring"><svg style="height:200px;"></svg></div></div>
+      </div>
+    </li>
+    <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Number of Projects starting by year</h3></div>
+        <div class="panel-body"><div id="chart4" class="chart bar" data-id="starting"><svg style="height:200px;"></svg></div></div>
+      </div>
+    </li>
+  </ul>
+</div>
 
   <h3><%=  link_to @category.name, group_path(@group) %> <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_group_category_path(@group, @category) %> </h3>
 
@@ -7,13 +35,13 @@
 
 <h1>Listing documents</h1>
   <ul>
-    <% @category.documents.each do |document| %>
+    <%# @category.documents.each do |document| %>
       <li>
-          <%= link_to document.name , group_category_document_path(@group, @category.id, document.id) %>
-          <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_group_category_document_path(@group, @category.id, document.id) %>
-          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, group_category_document_path(@group, @category.id, document.id) , method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%#link_to document.name , group_category_document_path(@group, @category.id, document.id) %>
+          <%# link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_group_category_document_path(@group, @category.id, document.id) %>
+          <%# link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, group_category_document_path(@group, @category.id, document.id) , method: :delete, data: { confirm: 'Are you sure?' } %>
       </li>
-    <% end %>
+    <% #end %>
     </ul>
 
 <br>
@@ -28,3 +56,109 @@
   <%= file_field_tag :file %>
   <%= submit_tag "Import" %>
 <% end %>
+
+
+
+
+<script type="text/javascript">
+var groupId = '<%= @group.id %>';
+var categoryId = '<%= @category.id %>';
+var yearStartingData;
+var yearExpiringData;
+$.get('/groups/'+groupId+'/categories/'+categoryId+'/documents?type=year_starting', function(data){
+  yearStartingData=data;
+  drawBarChart(data, 'chart4');
+});
+$.get('/groups/'+groupId+'/categories/'+categoryId+'/documents?type=year_expiring', function(data){
+  yearExpiringData = data;
+  drawBarChart(data, 'chart');
+  drawPieChart(data, 'chart2', true);
+  drawPieChart(data, 'chart3', false);
+});
+
+function drawBarChart(data,divId){
+  nv.addGraph(function() {
+    var chart = nv.models.discreteBarChart()
+        .x(function(d) { return d.label })    //Specify the data accessors.
+        .y(function(d) { return d.value })
+        .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+        .tooltips(false)        //Don't show tooltips
+        .showValues(true)       //...instead, show the bar value right on top of each bar.
+        .transitionDuration(1000)
+        ;
+
+    d3.select('#'+divId+' svg')
+        .datum([{key: 'Cumulative Return', values: data}])
+        .call(chart);
+
+    chart.discretebar.dispatch.on('elementClick', function(e){ 
+      console.log('element: ' + e.value); 
+      console.dir(e.point); 
+    });
+   
+    return chart;
+  });
+}
+
+function drawPieChart(data,divId,donut){
+
+    nv.addGraph(function() {
+      var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLabels(true)     //Display pie labels
+      .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+      .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+      .donut(donut)          //Turn on Donut mode. Makes pie chart look tasty!
+      .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+      ;
+ 
+    d3.select('#'+divId+' svg')
+        .datum(data)
+        .transition().duration(350)
+        .call(chart);
+ 
+  return chart;
+  });
+
+}
+
+$(".gridster ul").gridster({
+    widget_margins: [10, 10],
+    widget_base_dimensions: [140, 140],
+    resize: {
+        enabled: true,
+        stop: function(e, ui, $widget) {
+          resizeChart($widget);
+      }
+    }
+});
+
+function resizeChart(widget){
+  widget.find('svg').width(widget.width()-20);
+  // widget.height(widget.height()-80);
+  widget.find('svg').height(widget.height()-60);
+  var chart = widget.find('.chart');
+  if (chart.hasClass('bar')) {
+    drawBarChart(getData(chart), chart.attr('id'));
+  }else if(chart.hasClass('pie')){
+    drawPieChart(getData(chart), chart.attr('id'), false);
+  }else if(chart.hasClass('donut')){
+    drawPieChart(getData(chart), chart.attr('id'), true);
+  };
+}
+
+function getData(c){
+  var dataType = c.attr('data-id');
+  if (dataType == 'expiring'){
+    return yearExpiringData;
+  }else{
+    return yearStartingData;
+  }
+
+  
+}
+
+
+
+</script>
