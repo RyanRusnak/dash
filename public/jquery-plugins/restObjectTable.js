@@ -122,7 +122,18 @@
         var tds = '';
         for (var j=0; j<dataCols.length; j+=1){
           if (data[i][dataCols[j]]){
-            tds += '<td class="editable">'+data[i][dataCols[j]]+'</td>';
+            if (dataCols[j]=='codes'){
+              var codes = data[i][dataCols[j]];
+              var links = '';
+              for (var k=0; k<codes.length; k+=1){
+                links += '<a href="code_show.html?id='+codes[k]['id']+'">'+codes[k]['name']+'</a>'; 
+              }
+              tds += '<td class="editable">'+links+'</td>';
+            }else if(dataCols[j]=='name'){
+              tds += '<td class="editable"><a href="'+model+'_show.html?id='+data[i]['_id'].$oid+'">'+data[i][dataCols[j]]+'</a></td>';
+            }else{
+              tds += '<td class="editable">'+data[i][dataCols[j]]+'</td>';
+            }
           }else{
             tds += '<td class="editable"></td>';
           }

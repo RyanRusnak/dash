@@ -9,6 +9,7 @@ class CodesController < ApplicationController
   end
 
   def show
+    render json: @code
   end
 
   def new
