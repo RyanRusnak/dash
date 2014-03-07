@@ -1,13 +1,11 @@
 class DocumentsController < ApplicationController
-  before_action :set_group, except: []
-  before_action :set_category, except: []
   before_action :set_document, only: [:show, :edit, :update, :destroy]
   
 
   # GET /documents
   # GET /documents.json
   def index
-    @documents = @category.documents.all
+    @documents = Document.all
 
     case params[:type]
       when "year_expiring"
@@ -24,6 +22,8 @@ class DocumentsController < ApplicationController
         }
       when "paginate"
         @documents = @documents.all.take(100)
+      when "by_code"
+        @documents = Document.any_in(:codes => [params[:code]]);
       else 
         
       end
@@ -49,14 +49,14 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
-    @document = @category.documents.new(document_params)
+    @document = Document.new(document_params)
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to group_category_document_path(@group, @category, @document), notice: 'Document was successfully created.' }
+        # format.html { redirect_to group_category_document_path(@group, @category, @document), notice: 'Document was successfully created.' }
         format.json { render action: 'show', status: :created, location: @document }
       else
-        format.html { render action: 'new' }
+        # format.html { render action: 'new' }
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end
@@ -65,12 +65,15 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1
   # PATCH/PUT /documents/1.json
   def update
+    codeHash = JSON.parse(document_params[:codes])
+    doc = document_params
+    doc[:codes]= codeHash
     respond_to do |format|
-      if @document.update(document_params)
-        format.html { redirect_to group_category_document_path(@group, @category, @document), notice: 'Document was successfully updated.' }
+      if @document.update(doc)
+        # format.html { redirect_to group_category_document_path(@group, @category, @document), notice: 'Document was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        # format.html { render action: 'edit' }
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end
@@ -81,26 +84,19 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to group_category_path(@group, @category) }
+      # format.html { redirect_to group_category_path(@group, @category) }
       format.json { head :no_content }
     end
   end
 
   private
-    def set_group
-      @group = Group.find(params[:group_id])
-    end
-  # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = @group.categories.find(params[:category_id])
-    end
     # Use callbacks to share common setup or constraints between actions.
     def set_document
-      @document = @category.documents.find(params[:id])
+      @document = Document.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params.require(:document).permit(:name, :body, :type)
+      params.require(:document).permit(:name, :body, :type, :codes)
     end
 end

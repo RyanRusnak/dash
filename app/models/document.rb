@@ -1,7 +1,6 @@
 class Document
   include Mongoid::Document
 
-  belongs_to :category
   
   field  :name, type: String
   field  :body, type: String
@@ -17,6 +16,7 @@ class Document
   field  :project, type: String
   field  :obligated_total_cost_amt, type: String
   field  :codes, type: Array
+  field  :tags, type: Array
 
   def self.short_list(documents, att_name)
     documents = documents.group_by{ |document|

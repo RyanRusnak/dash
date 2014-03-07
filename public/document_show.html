@@ -23,8 +23,9 @@
 	<link href="assets/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
 	<link href="assets/css/fullcalendar.css" rel="stylesheet">	
 	<link href="assets/css/jquery.gritter.css" rel="stylesheet">
-	<link href="/css/jquery.gridster.min.css" rel="stylesheet">	
-	<link href="/css/nv.d3.min.css" rel="stylesheet">
+	<link href="/js/select2/select2.css" rel="stylesheet">
+	<link href="/js/select2/select2-bootstrap.css" rel="stylesheet">
+	
 	<!-- <link href="assets/css/glyphicons.css" rel="stylesheet"> -->
 	
 	<!-- main style -->
@@ -344,35 +345,14 @@
 				</ul>
 				<hr>
 			</div>
+			
 			<div class="row">
-				<div class="gridster">
-				  <ul class="list-unstyled">
-				    <li data-row="1" data-col="1" data-sizex="2" data-sizey="2">
-				      <div class="panel panel-default">
-				        <div class="panel-heading"><h3 class="panel-title">Number of Projects by year</h3></div>
-				        <div class="panel-body"><div id="chart" class="chart bar" data-id="expiring"><svg style="height:200px; width:200px;"></svg></div></div>
-				      </div>
-				    </li>
-				    <li data-row="1" data-col="2" data-sizex="2" data-sizey="2">
-				      <div class="panel panel-default">
-				        <div class="panel-heading"><h3 class="panel-title">Number of Projects by year</h3></div>
-				        <div class="panel-body"><div id="chart2" class="chart donut" data-id="expiring"><svg style="height:200px;"></svg></div></div>
-				      </div>
-				    </li>
-				    <li data-row="2" data-col="1" data-sizex="2" data-sizey="2">
-				      <div class="panel panel-default">
-				        <div class="panel-heading"><h3 class="panel-title">Number of Projects by year</h3></div>
-				        <div class="panel-body"><div id="chart3" class="chart pie" data-id="expiring"><svg style="height:200px;"></svg></div></div>
-				      </div>
-				    </li>
-				    <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
-				      <div class="panel panel-default">
-				        <div class="panel-heading"><h3 class="panel-title">Number of Projects starting by year</h3></div>
-				        <div class="panel-body"><div id="chart4" class="chart bar" data-id="starting"><svg style="height:200px;"></svg></div></div>
-				      </div>
-				    </li>
-				  </ul>
-				</div>
+				<form id="grant-form">
+					<label>Name:</label><input id="grant-name" type="text" name="name">
+					<label>Codes:</label><input type="hidden" id="grant-codes">
+					<label>Text:</label><input id="grant-text" type="text" name="body">
+				</form>
+				<button id="update-grant">Update Grant</button>
 			</div>
 			
 			<hr>
@@ -465,121 +445,118 @@
 	<script src="assets/js/core.min.js"></script>
 	
 	<!-- inline scripts related to this page -->
-	<script src="assets/js/pages/index.js"></script>
-	<script src="/js/d3.min.js"></script>
-	<script src="/js/nv.d3.min.js"></script>
-	<script src="/js/jquery.gridster.min.js"></script>
-	<script src="/js/jquery.gridster.with-extras.min.js"></script>
 	<script src="/js/purl.js"></script>
+	<script src="/js//select2/select2.min.js"></script>
 
 
 <script type="text/javascript">
 var docId = $.url().param('id');
+$.get('/codes', function(data){
+	var select2Array = [];
+	 for(var i=0;i<data.length;i+=1){
+	 	select2Array.push({id:data[i]._id.$oid, text:data[i].name});
+	 }
 
-$.get('/groups/53110bf47279618edf000000/categories/5314d3b7727961cb501e0000/documents/'+docId+'.json', function(data){
-	$(".breadcrumb").append('<li>'+data.name+'</li>');
+	$.get('/documents/'+docId+'.json', function(grant){
+		$(".breadcrumb").append('<li>'+grant.name+'</li>');
+		console.log(grant.codes);
+
+		$("#grant-name").val(grant.name);
+		// $("#grant-codes").val(grant.codes);
+		$("#grant-text").val(grant.body);
+
+		$("#grant-codes").select2({
+		    data:select2Array,
+		    multiple: true,
+		    width: "300px"
+		});
+		$('#grant-codes').select2('data', grant.codes);
+	});
 });
 
-// ================================================= charting ==================================== //
-var groupId = '<%= @group.id %>';
-var categoryId = '<%= @category.id %>';
-var yearStartingData;
-var yearExpiringData;
-$.get('/groups/53110bf47279618edf000000/categories/5314d3b7727961cb501e0000/documents?type=year_starting', function(data){
-  yearStartingData=data;
-  drawBarChart(data, 'chart4');
-});
-$.get('/groups/53110bf47279618edf000000/categories/5314d3b7727961cb501e0000/documents?type=year_expiring', function(data){
-  yearExpiringData = data;
-  drawBarChart(data, 'chart');
-  drawPieChart(data, 'chart2', true);
-  drawPieChart(data, 'chart3', false);
-});
+$("#update-grant").click(function(){
+	var datastring = $("#grant-form").serializeObject();
+	var selectedCodes = ( JSON.stringify($("#grant-codes").select2('data')) );
+	datastring['codes']=selectedCodes;
+	$.ajax({
+	  url: '/documents/'+docId,
+	  type: 'PUT',
+	  data: {'document': datastring},
+	  success: function(response) {
+	    console.log(response);
+	  }
+	});
 
-function drawBarChart(data,divId){
-  nv.addGraph(function() {
-    var chart = nv.models.discreteBarChart()
-        .x(function(d) { return d.label })    //Specify the data accessors.
-        .y(function(d) { return d.value })
-        .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-        .tooltips(false)        //Don't show tooltips
-        .showValues(true)       //...instead, show the bar value right on top of each bar.
-        .transitionDuration(1000)
-        ;
+	
 
-    d3.select('#'+divId+' svg')
-        .datum([{key: 'Cumulative Return', values: data}])
-        .call(chart);
-
-    chart.discretebar.dispatch.on('elementClick', function(e){ 
-      console.log('element: ' + e.value); 
-      console.dir(e.point); 
-    });
-   
-    return chart;
-  });
-}
-
-function drawPieChart(data,divId,donut){
-
-    nv.addGraph(function() {
-      var chart = nv.models.pieChart()
-      .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
-      .showLabels(true)     //Display pie labels
-      .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
-      .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-      .donut(donut)          //Turn on Donut mode. Makes pie chart look tasty!
-      .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
-      ;
- 
-    d3.select('#'+divId+' svg')
-        .datum(data)
-        .transition().duration(350)
-        .call(chart);
- 
-  return chart;
-  });
-
-}
-
-$(".gridster ul").gridster({
-    widget_margins: [10, 10],
-    widget_base_dimensions: [140, 140],
-    resize: {
-        enabled: true,
-        stop: function(e, ui, $widget) {
-          resizeChart($widget);
-      }
-    }
 });
 
-function resizeChart(widget){
-  widget.find('svg').width(widget.width()-20);
-  // widget.height(widget.height()-80);
-  widget.find('svg').height(widget.height()-60);
-  var chart = widget.find('.chart');
-  if (chart.hasClass('bar')) {
-    drawBarChart(getData(chart), chart.attr('id'));
-  }else if(chart.hasClass('pie')){
-    drawPieChart(getData(chart), chart.attr('id'), false);
-  }else if(chart.hasClass('donut')){
-    drawPieChart(getData(chart), chart.attr('id'), true);
-  };
-}
 
-function getData(c){
-  var dataType = c.attr('data-id');
-  if (dataType == 'expiring'){
-    return yearExpiringData;
-  }else{
-    return yearStartingData;
-  }
+//================================================================ helper functions
+$.fn.serializeObject = function(){
 
-  
-}
+        var self = this,
+            json = {},
+            push_counters = {},
+            patterns = {
+                "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+                "push":     /^$/,
+                "fixed":    /^\d+$/,
+                "named":    /^[a-zA-Z0-9_]+$/
+            };
 
 
+        this.build = function(base, key, value){
+            base[key] = value;
+            return base;
+        };
+
+        this.push_counter = function(key){
+            if(push_counters[key] === undefined){
+                push_counters[key] = 0;
+            }
+            return push_counters[key]++;
+        };
+
+        $.each($(this).serializeArray(), function(){
+
+            // skip invalid keys
+            if(!patterns.validate.test(this.name)){
+                return;
+            }
+
+            var k,
+                keys = this.name.match(patterns.key),
+                merge = this.value,
+                reverse_key = this.name;
+
+            while((k = keys.pop()) !== undefined){
+
+                // adjust reverse_key
+                reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+                // push
+                if(k.match(patterns.push)){
+                    merge = self.build([], self.push_counter(reverse_key), merge);
+                }
+
+                // fixed
+                else if(k.match(patterns.fixed)){
+                    merge = self.build([], k, merge);
+                }
+
+                // named
+                else if(k.match(patterns.named)){
+                    merge = self.build({}, k, merge);
+                }
+            }
+
+            json = $.extend(true, json, merge);
+        });
+
+        return json;
+    };
 
 </script>
 		<!-- end: JavaScript-->

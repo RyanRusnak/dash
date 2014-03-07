@@ -1,14 +1,9 @@
 Classify::Application.routes.draw do
 
-  resources :groups do 
-    member do
+  resources :documents do
+    member do 
+      post 'import'
       post 'classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
-    end
-    resources :categories do
-      member do
-        post 'import'
-      end
-      resources :documents
     end
   end
 
