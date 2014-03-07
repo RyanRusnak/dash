@@ -28,6 +28,8 @@
 	
 	<!-- main style -->
 	<link href="assets/css/style.min.css" rel="stylesheet">
+	<link href="/js/select2/select2.css" rel="stylesheet">
+	<link href="/js/select2/select2-bootstrap.css" rel="stylesheet">
 
 	<!--[if lt IE 9 ]>
 		<link href="assets/css/style-ie.css" rel="stylesheet">
@@ -344,6 +346,38 @@
 				<hr>
 			</div>
 
+			<div class="row">	
+				<div class="col-lg-12">
+					<div class="box">
+						<div class="box-header">
+							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Grants</h2>
+							<div class="box-icon">
+								<a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+								<a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
+							</div>
+						</div>
+						<div class="box-content">
+  							<div id="document-list">
+  								
+  							</div>
+							<div class="pagination pagination-centered">
+							  <ul class="pagination">
+								<li><a href="table.html#">Prev</a></li>
+								<li class="active">
+								  <a href="table.html#">1</a>
+								</li>
+								<li><a href="table.html#">2</a></li>
+								<li><a href="table.html#">3</a></li>
+								<li><a href="table.html#">4</a></li>
+								<li><a href="table.html#">Next</a></li>
+							  </ul>
+							</div>     
+						</div>
+					</div>
+				</div><!--/col-->
+			</div><!--/row-->
+
 			
 			<hr>
 			
@@ -436,19 +470,28 @@
 	
 	<!-- inline scripts related to this page -->
 	<script src="/js/purl.js"></script>
+	<script src="/js//select2/select2.min.js"></script>
+	<script type="text/javascript" src="/jquery-plugins/restObjectTable.js"></script>
 
 
 <script type="text/javascript">
 var codeId = $.url().param('id');
+var codeName = $.url().param('name');
+console.log(codeName);
 $.get('/codes/'+codeId, function(data){
   	$(".breadcrumb").append('<li>'+data.name+'</li>');
-  	console.log(data);
-
-	
+  	// console.log(data);
 });
 
-$.get('/documents?type=by_code&code='+codeId, function(data){
-	console.log(data);
+$.get('/documents?type=by_code&code='+codeId+'&code_name='+codeName, function(data){
+	console.log(data.length);
+	$("#document-list").restObjectTable({
+		'model':'document',
+		'url':'/documents',
+		'dataObject': data,
+		'dataCols':['name', 'codes'],
+		'dataColNames':['name', 'codes','Actions']
+	});
 });
 
 </script>

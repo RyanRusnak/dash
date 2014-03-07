@@ -23,7 +23,7 @@ class DocumentsController < ApplicationController
       when "paginate"
         @documents = @documents.all.take(100)
       when "by_code"
-        @documents = Document.any_in(:codes => [params[:code]]);
+        @documents = Document.any_in(:codes => {"id"=>params[:code],"text"=>params[:code_name]})
       else 
         
       end
