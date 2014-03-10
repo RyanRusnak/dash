@@ -6,6 +6,7 @@ class DocumentsController < ApplicationController
   # GET /documents.json
   def index
     @documents = Document.all
+    total_cost = @documents.map{|e| e.obligated_total_cost_amt.to_i}.reduce(:+)
 
     case params[:type]
       when "year_expiring"
@@ -23,7 +24,11 @@ class DocumentsController < ApplicationController
       when "paginate"
         @documents = @documents.all.take(100)
       when "by_code"
-        @documents = Document.any_in(:codes => {"id"=>params[:code],"text"=>params[:code_name]})
+        code_docs = Document.any_in(:codes => {"id"=>params[:code],"text"=>params[:code_name]})
+        docs_cost = code_docs.map{|e| e.obligated_total_cost_amt.to_i}.reduce(:+)
+        @documents = {:documents=> code_docs, 
+        :cost=> docs_cost, 
+        :percent_of_budget=>((docs_cost.to_f/total_cost.to_f)*100).round(2)}
       else 
         
       end

@@ -346,6 +346,40 @@
 				<hr>
 			</div>
 
+			<div class="row circleStats">
+				
+				<div class="col-md-2 col-sm-4 col-xs-6">
+                	<div class="circleStatsItem red">
+						<i class="fa fa-file"></i>
+						<span class="plus"></span>
+						<span class="percent">#</span>
+                    	<input id="total-grants" type="text" class="orangeCircle" />
+                	</div>
+					<div class="box-small-title">Grants</div>
+				</div><!--/col-->
+				
+				<div class="col-md-2 col-sm-4 col-xs-6">
+                	<div class="circleStatsItem blue">
+                    	<i class="fa  fa-money"></i>
+						<span class="plus"></span>
+						<span class="percent">%</span>
+                    	<input id="percent-of-budget" type="text" class="blueCircle" />
+                	</div>
+					<div class="box-small-title">% of Total Budget</div>
+				</div><!--/col-->
+				
+				<div class="col-md-2 col-sm-4 col-xs-6">
+					<div class="circleStatsItem yellow">
+                    	<i class="fa  fa-dollar"></i>
+						<span class="percent"></span>
+                    	<input id="total-cost"  type="text" class="yellowCircle" />
+                	</div>
+					<div class="box-small-title">Total Cost in Dollars</div>
+				</div><!--/col-->
+				
+			</div><!--/row-->
+
+
 			<div class="row">	
 				<div class="col-lg-12">
 					<div class="box">
@@ -472,6 +506,7 @@
 	<script src="/js/purl.js"></script>
 	<script src="/js//select2/select2.min.js"></script>
 	<script type="text/javascript" src="/jquery-plugins/restObjectTable.js"></script>
+	<script src="assets/js/pages/code_show.js"></script>
 
 
 <script type="text/javascript">
@@ -484,11 +519,57 @@ $.get('/codes/'+codeId, function(data){
 });
 
 $.get('/documents?type=by_code&code='+codeId+'&code_name='+codeName, function(data){
-	console.log(data.length);
+
+	//set total # of grants
+	$("#total-grants").val(data['documents'].length);
+	$("#percent-of-budget").val(data['percent_of_budget']);
+	$("#total-cost").val(data['cost']);
+	console.log(data['cost']);
+	console.log(data['percent_of_budget']);
+	$(".orangeCircle").knob({
+	        'min':0,
+	        'max':100,
+	        'readOnly': true,
+	        'width': 120,
+	        'height': 120,
+	        'fgColor': '#FA5833',
+	        'dynamicDraw': true,
+	        'thickness': 0.2,
+	        'tickColorizeValues': true,
+			'skin':'tron'
+	    });
+		    $(".blueCircle").knob({
+	        'min':0,
+	        'max':100,
+	        'readOnly': true,
+	        'width': 120,
+	        'height': 120,
+	        'fgColor': '#2FABE9',
+	        'dynamicDraw': true,
+	        'thickness': 0.2,
+	        'tickColorizeValues': true,
+			'skin':'tron'
+	    });
+
+		$(".yellowCircle").knob({
+	        'min':0,
+	        'max':100000,
+	        'readOnly': true,
+	        'width': 120,
+	        'height': 120,
+	        'fgColor': '#e7e572',
+	        'dynamicDraw': false,
+	        'thickness': 0.2,
+	        'tickColorizeValues': true,
+			'skin':'tron'
+	    });
+
+	
+
 	$("#document-list").restObjectTable({
 		'model':'document',
 		'url':'/documents',
-		'dataObject': data,
+		'dataObject': data['documents'],
 		'dataCols':['name', 'codes'],
 		'dataColNames':['name', 'codes','Actions']
 	});
