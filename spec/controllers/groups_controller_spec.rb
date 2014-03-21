@@ -1,7 +1,7 @@
-require 'spec_helper'
+# require 'spec_helper'
 
-describe GroupsController do
+# describe GroupsController do
 
 
 
-end
+# end

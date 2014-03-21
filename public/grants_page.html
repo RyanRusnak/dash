@@ -318,10 +318,9 @@
 					<ul class="nav nav-tabs nav-stacked main-menu">
 						<li><a href="index.html"><i class="fa fa-home icon"></i><span class="hidden-sm"> Dashboard</span></a></li>
 						<li><a href="grants_page.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Grants</span></a></li>
-						<li><a href="codes_page.html"><i class="fa fa-edit"></i><span class="hidden-sm"> Codes</span></a></li>
-						<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm"> Buckets</span></a></li>
-						<li><a href="login.html"><i class="fa fa-lock"></i><span class="hidden-sm"> Find a Grant</span></a></li>
-						<li><a href="ui.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Upload a Grant</span></a></li>
+						<li><a href="tags_page.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Tags</span></a></li>
+						<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm"> Impac II Analysis</span></a></li>
+						<li><a href="ui.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Announcements</span></a></li>
 					</ul>
 				</div><!--/.well -->
 			</div><!--/col-->
@@ -432,18 +431,29 @@
 
 		<script type="text/javascript">
 			window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
-
 			$( document ).ready(function() {
-				$("#codes").restObjectTable({
-					'model':'document',
-					'url':'/documents',
-					'params':'?type=paginate',
-					'dataCols':['name', 'codes'],
-					'dataColNames':['name', 'codes','Actions']
-				});
+				var constraint = $.url().param('constrain_by');
+				var constraintParam = $.url().param('with');
+				if (constraint){
+					$.get('/documents?constrain_by=' + constraint + '&with=' + constraintParam, function(data){
+							$("#codes").basicTable({
+								'model':'document',
+								'dataObject': data['documents'],
+								'dataCols':['project_number_base','investigator','project_title','institution','tags', 'aids_dollars'],
+								'dataColNames':['Project Number','Investigator','Title','Institution', 'Tags', 'Cost']
+							});
+						});
+				}else{
+						$.get('/documents?constrain_by=paginate', function(data){
+							$("#codes").basicTable({
+								'model':'document',
+								'dataObject': data,
+								'dataCols':['project_number_base','investigator','project_title','institution','tags', 'aids_dollars'],
+								'dataColNames':['Project Number','Investigator','Title','Institution', 'Tags', 'Cost']
+							});
+						});
+				}
 			});
-			
-
 		</script>
 
 	<!--<![endif]-->
@@ -458,7 +468,7 @@
 	<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
 	
-	<script type="text/javascript" src="/jquery-plugins/restObjectTable.js"></script>
+	<script type="text/javascript" src="/jquery-plugins/basicTable.js"></script>
 	<!-- page scripts -->
 	<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="assets/js/jquery.knob.modified.min.js"></script>
@@ -475,9 +485,10 @@
 	<!-- theme scripts -->
 	<script src="assets/js/default.min.js"></script>
 	<script src="assets/js/core.min.js"></script>
-	
+	<script src="/js/purl.js"></script>
+
 	<!-- inline scripts related to this page -->
-	<script src="/js//select2/select2.min.js"></script>
+
 	
 		<!-- end: JavaScript-->
 	

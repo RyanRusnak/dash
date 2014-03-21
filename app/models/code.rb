@@ -1,7 +1,8 @@
 class Code
   include Mongoid::Document
+
+  belongs_to :document
   
-  field  :name, type: String
-  field  :description, type: String
+  field :code, type: String
 
 end

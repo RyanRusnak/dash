@@ -317,10 +317,9 @@
 					<ul class="nav nav-tabs nav-stacked main-menu">
 						<li><a href="index.html"><i class="fa fa-home icon"></i><span class="hidden-sm"> Dashboard</span></a></li>
 						<li><a href="grants_page.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Grants</span></a></li>
-						<li><a href="codes_page.html"><i class="fa fa-edit"></i><span class="hidden-sm"> Codes</span></a></li>
-						<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm"> Buckets</span></a></li>
-						<li><a href="login.html"><i class="fa fa-lock"></i><span class="hidden-sm"> Find a Grant</span></a></li>
-						<li><a href="ui.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Upload a Grant</span></a></li>
+						<li><a href="tags_page.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Tags</span></a></li>
+						<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm"> Impac II Analysis</span></a></li>
+						<li><a href="ui.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Announcements</span></a></li>
 					</ul>
 				</div><!--/.well -->
 			</div><!--/col-->
@@ -414,28 +413,28 @@
 			<div class="row">
 				<div class="gridster">
 				  <ul class="list-unstyled">
-				    <li data-row="1" data-col="1" data-sizex="2" data-sizey="2">
+				  	<li data-row="1" data-col="1" data-sizex="2" data-sizey="2">
 				      <div class="panel panel-default">
-				        <div class="panel-heading"><h3 class="panel-title">Number of Projects by year</h3></div>
-				        <div class="panel-body"><div id="chart" class="chart bar" data-id="expiring"><svg style="height:200px; width:200px;"></svg></div></div>
+				        <div class="panel-heading"><h3 class="panel-title">Current Submissions FY2014</h3></div>
+				        <div class="panel-body"><div id="chart4" class="chart bar" data-id="starting"><svg style="height:200px;"></svg></div></div>
 				      </div>
 				    </li>
 				    <li data-row="1" data-col="2" data-sizex="2" data-sizey="2">
 				      <div class="panel panel-default">
-				        <div class="panel-heading"><h3 class="panel-title">Number of Projects by year</h3></div>
-				        <div class="panel-body"><div id="chart2" class="chart donut" data-id="expiring"><svg style="height:200px;"></svg></div></div>
+				        <div class="panel-heading"><h3 class="panel-title">Dollars expiring by year</h3></div>
+				        <div class="panel-body"><div id="chart2" class="chart bar" data-id="expiringDollars"><svg style="height:200px;"></svg></div></div>
 				      </div>
 				    </li>
 				    <li data-row="2" data-col="1" data-sizex="2" data-sizey="2">
 				      <div class="panel panel-default">
-				        <div class="panel-heading"><h3 class="panel-title">Number of Projects by year</h3></div>
-				        <div class="panel-body"><div id="chart3" class="chart pie" data-id="expiring"><svg style="height:200px;"></svg></div></div>
+				        <div class="panel-heading"><h3 class="panel-title">Not Yet Reviewed FY2014</h3></div>
+				        <div class="panel-body"><div id="chart3" class="chart pie" data-id="status"><svg style="height:200px;"></svg></div></div>
 				      </div>
 				    </li>
 				    <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
 				      <div class="panel panel-default">
-				        <div class="panel-heading"><h3 class="panel-title">Number of Projects starting by year</h3></div>
-				        <div class="panel-body"><div id="chart4" class="chart bar" data-id="starting"><svg style="height:200px;"></svg></div></div>
+				        <div class="panel-heading"><h3 class="panel-title">Number Projects expiring by year</h3></div>
+				        <div class="panel-body"><div id="chart" class="chart bar" data-id="expiring"><svg style="height:200px; width:200px;"></svg></div></div>
 				      </div>
 				    </li>
 				  </ul>
@@ -479,7 +478,7 @@
 	<!-- start: JavaScript-->
 	<!--[if !IE]>-->
 
-			<script src="assets/js/jquery-2.0.3.min.js"></script>
+			<script src="/assets/js/jquery-2.0.3.min.js"></script>
 
 	<!--<![endif]-->
 
@@ -517,18 +516,30 @@
 		// ================================================= charting ==================================== //
 var groupId = '<%= @group.id %>';
 var categoryId = '<%= @category.id %>';
-var yearStartingData;
+var dollarsExpiringData;
 var yearExpiringData;
-$.get('/documents?type=year_starting', function(data){
+var statusData;
+$.get('/documents?constrain_by=all_tags.json', function(data){
   yearStartingData=data;
-  drawBarChart(data, 'chart4');
+  drawPieChart(data, 'chart4');
 });
-$.get('/documents?type=year_expiring', function(data){
+$.get('/documents?constrain_by=year_expiring.json', function(data){
+	// console.log(data);
   yearExpiringData = data;
   drawBarChart(data, 'chart');
-  drawPieChart(data, 'chart2', true);
-  drawPieChart(data, 'chart3', false);
+  // drawPieChart(data, 'chart3', false);
 });
+
+$.get('/documents?constrain_by=year_expiring_dollars.json', function(data){
+	// console.log(data);
+	dollarsExpiringData = data;
+  	drawBarChart(data, 'chart2');
+});
+$.get('/documents?constrain_by=status.json', function(data){
+	statusData = data;
+  	drawStatusPieChart(data, 'chart3');
+});
+
 
 function drawBarChart(data,divId){
   nv.addGraph(function() {
@@ -546,8 +557,9 @@ function drawBarChart(data,divId){
         .call(chart);
 
     chart.discretebar.dispatch.on('elementClick', function(e){ 
-      console.log('element: ' + e.value); 
+      // console.log('element: ' + e.value); 
       console.dir(e.point); 
+      window.location = "/grants_page.html?constrain_by=year&with="+ e.point.label;
     });
    
     return chart;
@@ -571,6 +583,41 @@ function drawPieChart(data,divId,donut){
         .datum(data)
         .transition().duration(350)
         .call(chart);
+
+    chart.pie.dispatch.on('elementClick', function(e){ 
+      // console.log('element: ' + e.value); 
+      console.dir(e.point); 
+      window.location = "/grants_page.html?constrain_by=tag&with="+ e.point.label;
+    });
+ 
+  return chart;
+  });
+
+}
+
+function drawStatusPieChart(data,divId,donut){
+
+    nv.addGraph(function() {
+      var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLabels(true)     //Display pie labels
+      .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+      .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+      .donut(donut)          //Turn on Donut mode. Makes pie chart look tasty!
+      .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+      ;
+ 
+    d3.select('#'+divId+' svg')
+        .datum(data)
+        .transition().duration(350)
+        .call(chart);
+
+    chart.pie.dispatch.on('elementClick', function(e){ 
+      // console.log('element: ' + e.value); 
+      console.dir(e.point); 
+      window.location = "/grants_page.html?constrain_by=status&with="+ e.point.label;
+    });
  
   return chart;
   });
@@ -606,11 +653,13 @@ function getData(c){
   var dataType = c.attr('data-id');
   if (dataType == 'expiring'){
     return yearExpiringData;
+  }else if (dataType == 'expiringDollars'){
+    return dollarsExpiringData;
+  }else if(dataType == 'status'){
+    return statusData;
   }else{
     return yearStartingData;
-  }
-
-  
+  }  
 }
 
 

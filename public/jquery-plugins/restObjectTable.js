@@ -202,7 +202,7 @@
         $(that).html(table);
     }
     var select2Array = [];
-  $.get('/codes', function(data){
+  $.get('/tags', function(data){
    for(var i=0;i<data.length;i+=1){
     select2Array.push({id:data[i]._id.$oid, text:data[i].name});
    }

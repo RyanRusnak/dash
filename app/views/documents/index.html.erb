@@ -1,10 +1,23 @@
+<h1>Document import</h1>
+<%= form_tag documents_import_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<h1>Abstracts and Codes import</h1>
+<%= form_tag documents_code_import_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+
 <h1>Listing documents <small>These are the buckets</small></h1>
 
   <ul>
     <% @documents.each do |document| %>
       <li>
         <h4>
-          <%= link_to document.name, document %>
+          <%= link_to document.project_title, document %>
           <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_document_path(document) %>
           <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, document, method: :delete, data: { confirm: 'Are you sure?' } %>
         <h4>

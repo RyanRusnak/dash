@@ -25,6 +25,7 @@
 	<link href="assets/css/jquery.gritter.css" rel="stylesheet">
 	<link href="/js/select2/select2.css" rel="stylesheet">
 	<link href="/js/select2/select2-bootstrap.css" rel="stylesheet">
+	<link href="/css/jquery.gridster.min.css" rel="stylesheet">	
 	
 	<!-- <link href="assets/css/glyphicons.css" rel="stylesheet"> -->
 	
@@ -345,12 +346,37 @@
 				</ul>
 				<hr>
 			</div>
+
+			<div class="row">
+				<div class="gridster">
+				  <ul class="list-unstyled">
+				    <li data-row="1" data-col="1" data-sizex="4" data-sizey="2">
+				      <div class="panel panel-default">
+				        <div class="panel-heading"><h3 class="panel-title">Top Graphs</h3></div>
+				        <div class="panel-body"></div>
+				      </div>
+				    </li>
+				    <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
+				      <div class="panel panel-default">
+				        <div class="panel-heading"><h3 class="panel-title">Project Feed</h3></div>
+				        <div class="panel-body"></div>
+				      </div>
+				    </li>
+				    <li data-row="2" data-col="3" data-sizex="2" data-sizey="2">
+				      <div class="panel panel-default">
+				        <div class="panel-heading"><h3 class="panel-title">Right Stuff</h3></div>
+				        <div class="panel-body"></div>
+				      </div>
+				    </li>
+				  </ul>
+				</div>
+			</div>
 			
 			<div class="row">
 				<form id="grant-form">
-					<label>Name:</label><input id="grant-name" type="text" name="name">
-					<label>Codes:</label><input type="hidden" id="grant-codes">
-					<label>Text:</label><input id="grant-text" type="text" name="body">
+					<label>Name:</label><input id="grant-name" type="text" name="project_title">
+					<label>Tags:</label><input type="hidden" id="grant-tags">
+					<!-- <label>Text:</label><input id="grant-text" type="text" name="body"> -->
 				</form>
 				<button id="update-grant">Update Grant</button>
 			</div>
@@ -447,37 +473,39 @@
 	<!-- inline scripts related to this page -->
 	<script src="/js/purl.js"></script>
 	<script src="/js//select2/select2.min.js"></script>
+	<script src="/js/jquery.gridster.min.js"></script>
+	<script src="/js/jquery.gridster.with-extras.min.js"></script>
 
 
 <script type="text/javascript">
 var docId = $.url().param('id');
-$.get('/codes', function(data){
+$.get('/tags', function(data){
 	var select2Array = [];
 	 for(var i=0;i<data.length;i+=1){
 	 	select2Array.push({id:data[i]._id.$oid, text:data[i].name});
 	 }
 
 	$.get('/documents/'+docId+'.json', function(grant){
-		$(".breadcrumb").append('<li>'+grant.name+'</li>');
-		console.log(grant.codes);
+		$(".breadcrumb").append('<li>'+grant.project_title+'</li>');
+		console.log(grant);
 
-		$("#grant-name").val(grant.name);
-		// $("#grant-codes").val(grant.codes);
-		$("#grant-text").val(grant.body);
+		$("#grant-name").val(grant.project_title);
+		// $("#grant-tags").val(grant.codes);
+		// $("#grant-text").val(grant.body);
 
-		$("#grant-codes").select2({
+		$("#grant-tags").select2({
 		    data:select2Array,
 		    multiple: true,
 		    width: "300px"
 		});
-		$('#grant-codes').select2('data', grant.codes);
+		$('#grant-tags').select2('data', grant.tags);
 	});
 });
 
 $("#update-grant").click(function(){
 	var datastring = $("#grant-form").serializeObject();
-	var selectedCodes = ( JSON.stringify($("#grant-codes").select2('data')) );
-	datastring['codes']=selectedCodes;
+	var selectedTags = ( JSON.stringify($("#grant-tags").select2('data')) );
+	datastring['tags']=selectedTags;
 	$.ajax({
 	  url: '/documents/'+docId,
 	  type: 'PUT',
@@ -487,8 +515,18 @@ $("#update-grant").click(function(){
 	  }
 	});
 
-	
 
+});
+
+$(".gridster ul").gridster({
+    widget_margins: [10, 10],
+    widget_base_dimensions: [200, 140],
+    resize: {
+        enabled: true,
+        stop: function(e, ui, $widget) {
+          resizeChart($widget);
+      }
+    }
 });
 
 

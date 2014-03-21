@@ -1,6 +1,6 @@
 class CodesController < ApplicationController
 
-
+  before_action :set_document, only: [:show, :edit, :update, :destroy]
   before_action :set_code, only: [:show, :edit, :update, :destroy, :import]
 
   def index
@@ -44,8 +44,12 @@ class CodesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_document
+      @document = Document.find(params[:document_id])
+    end
+
     def set_code
-      @code = Code.find(params[:id])
+      @code = @documemnt.codes.find(params[:code_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
