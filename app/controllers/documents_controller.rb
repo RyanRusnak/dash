@@ -8,10 +8,10 @@ class DocumentsController < ApplicationController
     @documents = Document.all
     total_cost = @documents.map{|e| e.aids_dollars.to_i}.reduce(:+)
 
-    # AIDS_tag = Tag.find
-
-    constraint = params[:with]
+    constraint = params[:with].split('.')[0] rescue nil
     constrained_by = params[:constrain_by].split('.')[0] rescue nil
+    review_type = params[:review_type].split('.')[0] rescue nil
+
     case constrained_by
       when "year_expiring"
         @documents = Document.short_list(@documents, "expire_fy")
@@ -38,8 +38,10 @@ class DocumentsController < ApplicationController
         if (!tag)
           tag = Tag.where(:name => constraint)[0]
         end
-
         tagged_docs = Document.any_in(:tags => {"id"=>tag.id.to_s,"text"=>tag.name})
+        tagged_docs.select{|d|
+          d.status = review_type
+        }
         docs_cost = tagged_docs.map{|e| e.aids_dollars.to_i}.reduce(:+)
         @documents = {
           :documents =>tagged_docs,
@@ -48,21 +50,18 @@ class DocumentsController < ApplicationController
         }
       when "status"
         if (constraint)
-          @documents = {:documents => Document.where(:status => constraint).take(100)}
+          @documents = Document.where(:status => constraint)
+          @documents = {:documents => Document.tag_list(@documents, "tags")}
         else
           @documents = Document.short_list(@documents, "status")
         end
       else 
-        
       end
 
       respond_to do |format|
-        # format.html { render "index" }
+        format.html { render "index" }
         format.json { render json: @documents }
       end
-
-
-    # render json: @documents
   end
 
   # GET /documents/1

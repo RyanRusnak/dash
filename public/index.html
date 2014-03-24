@@ -535,9 +535,9 @@ $.get('/documents?constrain_by=year_expiring_dollars.json', function(data){
 	dollarsExpiringData = data;
   	drawBarChart(data, 'chart2');
 });
-$.get('/documents?constrain_by=status.json', function(data){
+$.get('/documents?constrain_by=status&with=unreviewed.json', function(data){
 	statusData = data;
-  	drawStatusPieChart(data, 'chart3');
+  	drawStatusPieChart(data['documents'], 'chart3');
 });
 
 
@@ -616,7 +616,7 @@ function drawStatusPieChart(data,divId,donut){
     chart.pie.dispatch.on('elementClick', function(e){ 
       // console.log('element: ' + e.value); 
       console.dir(e.point); 
-      window.location = "/grants_page.html?constrain_by=status&with="+ e.point.label;
+      window.location = "/grants_page.html?constrain_by=tag&with="+ e.point.label+"&review_type=unreviewed";
     });
  
   return chart;
