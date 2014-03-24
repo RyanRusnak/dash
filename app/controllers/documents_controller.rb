@@ -59,7 +59,7 @@ class DocumentsController < ApplicationController
       end
 
       respond_to do |format|
-        format.html { render "index" }
+        # format.html { render "index" }
         format.json { render json: @documents }
       end
   end
