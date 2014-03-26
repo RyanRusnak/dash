@@ -359,27 +359,29 @@
 				    <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
 				      <div class="panel panel-default">
 				        <div class="panel-heading"><h3 class="panel-title">Project Feed</h3></div>
-				        <div class="panel-body"></div>
+				        <div class="panel-body"><div id="feed"></div></div>
 				      </div>
 				    </li>
 				    <li data-row="2" data-col="3" data-sizex="2" data-sizey="2">
 				      <div class="panel panel-default">
 				        <div class="panel-heading"><h3 class="panel-title">Right Stuff</h3></div>
-				        <div class="panel-body"></div>
+				        <div class="panel-body">
+							<form id="grant-form">
+								<label>Name:</label><div id="grant-name"></div>
+								<label>Principal Investigator:</label><div id="pi"></div>
+								<label>Status:</label><div id="grant-status"></div>
+								<label>Table of Documents:</label>
+								<label>Tags:</label><input type="hidden" id="grant-tags">
+								<!-- <label>Text:</label><input id="grant-text" type="text" name="body"> -->
+							</form>
+							<button id="update-grant">Update Grant</button>
+				        </div>
 				      </div>
 				    </li>
 				  </ul>
 				</div>
 			</div>
 			
-			<div class="row">
-				<form id="grant-form">
-					<label>Name:</label><input id="grant-name" type="text" name="project_title">
-					<label>Tags:</label><input type="hidden" id="grant-tags">
-					<!-- <label>Text:</label><input id="grant-text" type="text" name="body"> -->
-				</form>
-				<button id="update-grant">Update Grant</button>
-			</div>
 			
 			<hr>
 			
@@ -475,6 +477,7 @@
 	<script src="/js//select2/select2.min.js"></script>
 	<script src="/js/jquery.gridster.min.js"></script>
 	<script src="/js/jquery.gridster.with-extras.min.js"></script>
+	<script type="text/javascript" src="/jquery-plugins/restObjectTable.js"></script>
 
 
 <script type="text/javascript">
@@ -489,7 +492,9 @@ $.get('/tags', function(data){
 		$(".breadcrumb").append('<li>'+grant.project_title+'</li>');
 		console.log(grant);
 
-		$("#grant-name").val(grant.project_title);
+		$("#grant-name").text(grant.project_title);
+		$("#grant-status").text(grant.status);
+		$("#pi").text(grant.investigator);
 		// $("#grant-tags").val(grant.codes);
 		// $("#grant-text").val(grant.body);
 
@@ -527,6 +532,14 @@ $(".gridster ul").gridster({
           resizeChart($widget);
       }
     }
+});
+
+$("#feed").restObjectTable({
+	'model':'post',
+	'url' : '/documents/'+docId+'/posts',
+	'params': ' ',
+	'dataCols':['body'],
+	'dataColNames':['Post']
 });
 
 

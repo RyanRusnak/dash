@@ -5,6 +5,7 @@ class Document
 
   has_many :abstracts, :dependent => :destroy
   has_many :codes, :dependent => :destroy
+  has_many :posts, :dependent => :destroy
 
   field  :year, type: String
   field  :project_number_base, type: String
@@ -83,6 +84,20 @@ class Document
           totals << sub
         end
         @documents = totals
+  end
+
+  def self.last_updated(documents, att_name)
+    documents = documents.group_by{ |document|
+          document.posts.last.read_attribute(att_name).year rescue nil
+        }
+        totals = []
+        documents.keys.each do |key|
+          sub = {}
+          sub[:label] = key
+          sub[:value] = documents[key].count
+          totals << sub
+        end
+        @documents = totals.sort_by { |x, y| x[:label] }
   end
 
   def self.import(file)

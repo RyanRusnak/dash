@@ -433,6 +433,12 @@
 				    </li>
 				    <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
 				      <div class="panel panel-default">
+				        <div class="panel-heading"><h3 class="panel-title">Projects Last Updated</h3></div>
+				        <div class="panel-body"><div id="chart5" class="chart bar" data-id="last-updated"><svg style="height:200px; width:200px;"></svg></div></div>
+				      </div>
+				    </li>
+				    <li data-row="3" data-col="1" data-sizex="2" data-sizey="2">
+				      <div class="panel panel-default">
 				        <div class="panel-heading"><h3 class="panel-title">Number Projects expiring by year</h3></div>
 				        <div class="panel-body"><div id="chart" class="chart bar" data-id="expiring"><svg style="height:200px; width:200px;"></svg></div></div>
 				      </div>
@@ -519,25 +525,30 @@ var categoryId = '<%= @category.id %>';
 var dollarsExpiringData;
 var yearExpiringData;
 var statusData;
-$.get('/documents?constrain_by=all_tags.json', function(data){
+var lastUpdatedData;
+$.get('/documents.json?constrain_by=all_tags', function(data){
   yearStartingData=data;
   drawPieChart(data, 'chart4');
 });
-$.get('/documents?constrain_by=year_expiring.json', function(data){
+$.get('/documents.json?constrain_by=year_expiring', function(data){
 	// console.log(data);
   yearExpiringData = data;
   drawBarChart(data, 'chart');
   // drawPieChart(data, 'chart3', false);
 });
 
-$.get('/documents?constrain_by=year_expiring_dollars.json', function(data){
+$.get('/documents.json?constrain_by=year_expiring_dollars', function(data){
 	// console.log(data);
 	dollarsExpiringData = data;
   	drawBarChart(data, 'chart2');
 });
-$.get('/documents?constrain_by=status&with=unreviewed.json', function(data){
+$.get('/documents.json?constrain_by=status&with=unreviewed', function(data){
 	statusData = data;
   	drawStatusPieChart(data['documents'], 'chart3');
+});
+$.get('/documents.json?constrain_by=last_updated', function(data){
+	lastUpdatedData = data;
+  	drawBarChart(data['documents'], 'chart5');
 });
 
 

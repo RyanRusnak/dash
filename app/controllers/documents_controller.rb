@@ -8,9 +8,9 @@ class DocumentsController < ApplicationController
     @documents = Document.all
     total_cost = @documents.map{|e| e.aids_dollars.to_i}.reduce(:+)
 
-    constraint = params[:with].split('.')[0] rescue nil
-    constrained_by = params[:constrain_by].split('.')[0] rescue nil
-    review_type = params[:review_type].split('.')[0] rescue nil
+    constraint = params[:with] rescue nil
+    constrained_by = params[:constrain_by] rescue nil
+    review_type = params[:review_type] rescue nil
 
     case constrained_by
       when "year_expiring"
@@ -55,6 +55,8 @@ class DocumentsController < ApplicationController
         else
           @documents = Document.short_list(@documents, "status")
         end
+      when "last_updated"
+        @documents = {:documents =>Document.last_updated(@documents.includes(:posts), "updated_at")}
       else 
       end
 

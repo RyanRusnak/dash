@@ -7,6 +7,7 @@ Classify::Application.routes.draw do
     # end
     resources :codes
     resources :abstracts
+    resources :posts
   end
   resources :tags
 
