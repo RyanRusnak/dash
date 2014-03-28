@@ -14,6 +14,7 @@ class DocumentsController < ApplicationController
 
     case constrained_by
       when "year_expiring"
+        @documents = Documents.where({:expire_fy.ne => nil})
         @documents = Document.short_list(@documents, "expire_fy")
       when "year_expiring_verbose"
         @documents = @documents.group_by{|document|
