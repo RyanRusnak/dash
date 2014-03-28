@@ -4,8 +4,14 @@
   <%= submit_tag "Import" %>
 <% end %>
 
-<h1>Abstracts and Codes import</h1>
+<h1>Codes import</h1>
 <%= form_tag documents_code_import_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<h1>Abstracts import</h1>
+<%= form_tag documents_abstract_import_path, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "Import" %>
 <% end %>

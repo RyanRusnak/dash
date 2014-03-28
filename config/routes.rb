@@ -13,6 +13,7 @@ Classify::Application.routes.draw do
 
   post  'documents/import' => 'documents#import'
   post  'documents/code_import' => 'documents#code_import'
+  post  'documents/abstract_import' => 'documents#abstract_import'
 
   # post '/groups/:id/classify_document(.:format)' => 'categories#classify_document', :defaults => { :format => 'json' }
 

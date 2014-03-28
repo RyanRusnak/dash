@@ -542,8 +542,9 @@ $.get('/documents.json?constrain_by=year_expiring_dollars', function(data){
 	dollarsExpiringData = data;
   	drawBarChart(data, 'chart2');
 });
-$.get('/documents.json?constrain_by=status&with=unreviewed', function(data){
+$.get('/documents.json?constrain_by=status&with=Unreviewed', function(data){
 	statusData = data;
+	// console.log(data);
   	drawStatusPieChart(data['documents'], 'chart3');
 });
 $.get('/documents.json?constrain_by=last_updated', function(data){

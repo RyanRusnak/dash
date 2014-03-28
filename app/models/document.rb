@@ -41,6 +41,9 @@ class Document
   field  :study_section, type: String
   field  :percentile, type: String
   field  :priority_score, type: String
+  field  :project_detail_id, type: String
+  field  :grant_flag, type: String
+  field  :submitted, type: String
   field  :tags, type: Array
   field  :status, type: String
 
@@ -52,6 +55,7 @@ class Document
         documents.keys.each do |key|
           sub = {}
           sub[:label] = key
+          logger.debug(key)
           sub[:value] = documents[key].count
           totals << sub
         end
@@ -101,8 +105,34 @@ class Document
   end
 
   def self.import(file)
+    aids = Tag.create({:name => "AIDS Related"})
+    non_aids = Tag.create({:name => "Non-AIDS Related"})
+    unclassified = Tag.create({:name => "Unclassified"})
+
     csv = CSV.new(file.read, :headers => true, :header_converters => :symbol)
-    cats = csv.to_a.map {|row| 
+    cats = csv.to_a.shuffle.each_with_index.map {|row, i|
+      submitted = ""
+      tags = []
+    if (i<1000)
+      submitted = "submitted"
+      if (i<800)
+        tags << {"id"=>aids.id,"text"=>aids.name}
+      elsif (i>=800 && i<950)
+        tags << {"id"=>non_aids.id,"text"=>non_aids.name}
+      else
+        tags << {"id"=>unclassified.id,"text"=>unclassified.name}
+      end
+    elsif (i>=1000 && i< 3000)
+      if (i<2500)
+        tags << {"id"=>aids.id,"text"=>aids.name}
+      elsif (i>=2500 && i<2800)
+        tags << {"id"=>non_aids.id,"text"=>non_aids.name}
+      else
+        tags << {"id"=>unclassified.id,"text"=>unclassified.name}
+      end
+    else
+      submitted = ""
+    end 
       row.to_hash 
       Document.create({
         :year => row[:year], 
@@ -138,13 +168,37 @@ class Document
         :i2_total_obligation => row[:i2_total_obligation], 
         :study_section => row[:study_section], 
         :percentile => row[:percentile], 
-        :priority_score => row[:priority_score] 
+        :priority_score => row[:priority_score], 
+        :project_detail_id => row[:project_detail_id],
+        :grant_flag => row[:grant_flag],
+        :submitted => submitted,
+        :tags => tags
       })
     }
     return 'success'
   end
 
   def self.code_import(file)
+    csv = CSV.new(file.read, :headers => true, :header_converters => :symbol)
+    cats = csv.to_a.map {|row| 
+      row.to_hash 
+      if (row[:strategic_plan_code].split('-')[1].strip == "2013")
+        # find the corresponding document by project_detail_id
+        doc = Document.where({:project_detail_id=>row[:project_detail_id]}).first
+        if (doc)
+          doc.codes.create({
+            :project_detail_id => row[:project_detail_id],
+            :code => row[:strategic_plan_code],
+            :strategic_plan_description => row[:strategic_plan_description],
+            :strategic_plan_dollars => row[:strategic_plan_dollars]
+            })
+        end
+      end
+    }
+    return 'success'
+  end
+
+    def self.abstract_import(file)
     csv = CSV.new(file.read, :headers => true, :header_converters => :symbol)
     cats = csv.to_a.map {|row| 
       row.to_hash 
@@ -162,11 +216,6 @@ class Document
               :project_num => row[:project_num],
               :abstract_text => body
               })
-            # create a code child record for each code
-            codes = row[:sp_code].split(',')
-            codes.each do |c| 
-              d.codes.create({:code => c})
-            end
           end
         end
       end

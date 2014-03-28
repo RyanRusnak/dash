@@ -61,7 +61,7 @@ class DocumentsController < ApplicationController
       end
 
       respond_to do |format|
-        # format.html { render "index" }
+        format.html { render "index" }
         format.json { render json: @documents }
       end
   end
@@ -134,6 +134,14 @@ class DocumentsController < ApplicationController
 
   def code_import
     if (Document.code_import(params[:file])) == "success"
+      render json: "success"
+    else
+      render json: "error"
+    end
+  end
+
+  def abstract_import
+    if (Document.abstract_import(params[:file])) == "success"
       render json: "success"
     else
       render json: "error"
