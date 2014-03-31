@@ -1,11 +1,11 @@
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
-  
+
 
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.all
+    @documents = Document.where(:submitted => "submitted")
     total_cost = @documents.map{|e| e.aids_dollars.to_i}.reduce(:+)
 
     constraint = params[:with] rescue nil
@@ -14,13 +14,15 @@ class DocumentsController < ApplicationController
 
     case constrained_by
       when "year_expiring"
-        @documents = Document.short_list(@documents, "expire_fy")
+        @docs_with_expire = Document.where({:expire_fy => { "$ne" => nil }, :submitted => "submitted"})
+        @documents = Document.short_list(@docs_with_expire, "expire_fy")
       when "year_expiring_verbose"
         @documents = @documents.group_by{|document|
           document.project_period_end_date.to_date.year rescue nil
         }
       when "year_expiring_dollars"
-        @documents = Document.short_list_dollars(@documents, "expire_fy")
+        @docs_with_expire = Document.where({:expire_fy => { "$ne" => nil }, :submitted => "submitted"})
+        @documents = Document.short_list_dollars(@docs_with_expire, "expire_fy")
       when "year_starting"
         @documents = Document.short_list(@documents, "project_period_start_date")
       when "year_starting_verbose"
@@ -50,14 +52,14 @@ class DocumentsController < ApplicationController
         }
       when "status"
         if (constraint)
-          @documents = Document.where(:status => constraint)
+          @documents = Document.where(:status => constraint, :submitted => "submitted")
           @documents = {:documents => Document.tag_list(@documents, "tags")}
         else
           @documents = Document.short_list(@documents, "status")
         end
       when "last_updated"
         @documents = {:documents =>Document.last_updated(@documents.includes(:posts), "updated_at")}
-      else 
+      else
       end
 
       respond_to do |format|

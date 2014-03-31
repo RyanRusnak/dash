@@ -111,67 +111,71 @@ class Document
 
     csv = CSV.new(file.read, :headers => true, :header_converters => :symbol)
     cats = csv.to_a.shuffle.each_with_index.map {|row, i|
-      submitted = ""
-      tags = []
+
+    status = ""
+    if (i%2==0) then status = "Reviewed" else status = "Unreviewed" end
+    submitted = ""
+    tags = []
     if (i<1000)
       submitted = "submitted"
       if (i<800)
-        tags << {"id"=>aids.id,"text"=>aids.name}
+        tags << {"id"=>aids.id.to_s,"text"=>aids.name}
       elsif (i>=800 && i<950)
-        tags << {"id"=>non_aids.id,"text"=>non_aids.name}
+        tags << {"id"=>non_aids.id.to_s,"text"=>non_aids.name}
       else
-        tags << {"id"=>unclassified.id,"text"=>unclassified.name}
+        tags << {"id"=>unclassified.id.to_s,"text"=>unclassified.name}
       end
     elsif (i>=1000 && i< 3000)
       if (i<2500)
-        tags << {"id"=>aids.id,"text"=>aids.name}
+        tags << {"id"=>aids.id.to_s,"text"=>aids.name}
       elsif (i>=2500 && i<2800)
-        tags << {"id"=>non_aids.id,"text"=>non_aids.name}
+        tags << {"id"=>non_aids.id.to_s,"text"=>non_aids.name}
       else
-        tags << {"id"=>unclassified.id,"text"=>unclassified.name}
+        tags << {"id"=>unclassified.id.to_s,"text"=>unclassified.name}
       end
     else
       submitted = ""
-    end 
-      row.to_hash 
-      Document.create({
-        :year => row[:year], 
-        :project_number_base => row[:project_number_base], 
-        :application_id => row[:application_id], 
-        :activity_code => row[:activity_code], 
-        :mechanism => row[:mechanism], 
-        :project_title => row[:project_title], 
-        :investigator => row[:investigator], 
-        :cong_district => row[:cong_district], 
-        :location => row[:location], 
-        :institution => row[:institution], 
-        :project_type => row[:project_type], 
-        :total_sic_dollars => row[:total_sic_dollars], 
-        :total_spc_dollars => row[:total_spc_dollars], 
-        :total_international_dollars => row[:total_international_dollars], 
-        :obligated_dollars => row[:obligated_dollars], 
-        :aids_dollars => row[:aids_dollars], 
-        :aids_percent => row[:aids_percent], 
-        :award_count => row[:award_count], 
-        :project_count => row[:project_count], 
-        :appl_id => row[:appl_id], 
-        :i2_project_num => row[:i2_project_num], 
-        :i2_subproject_id => row[:i2_subproject_id], 
-        :fut_yrs => row[:fut_yrs], 
-        :project_period_start_date => row[:project_period_start_date], 
-        :project_period_end_date => row[:project_period_end_date], 
-        :appl_period_start_date => row[:appl_period_start_date], 
-        :appl_period_end_date => row[:appl_period_end_date], 
-        :expire_fy => row[:expire_fy], 
-        :sub_project_flag => row[:sub_project_flag], 
-        :project_flag => row[:project_flag], 
-        :i2_total_obligation => row[:i2_total_obligation], 
-        :study_section => row[:study_section], 
-        :percentile => row[:percentile], 
-        :priority_score => row[:priority_score], 
+    end
+      row.to_hash
+      d = Document.create({
+        :year => row[:year],
+        :project_number_base => row[:project_number_base],
+        :application_id => row[:application_id],
+        :activity_code => row[:activity_code],
+        :mechanism => row[:mechanism],
+        :project_title => row[:project_title],
+        :investigator => row[:investigator],
+        :cong_district => row[:cong_district],
+        :location => row[:location],
+        :institution => row[:institution],
+        :project_type => row[:project_type],
+        :total_sic_dollars => row[:total_sic_dollars],
+        :total_spc_dollars => row[:total_spc_dollars],
+        :total_international_dollars => row[:total_international_dollars],
+        :obligated_dollars => row[:obligated_dollars],
+        :aids_dollars => row[:aids_dollars],
+        :aids_percent => row[:aids_percent],
+        :award_count => row[:award_count],
+        :project_count => row[:project_count],
+        :appl_id => row[:appl_id],
+        :i2_project_num => row[:i2_project_num],
+        :i2_subproject_id => row[:i2_subproject_id],
+        :fut_yrs => row[:fut_yrs],
+        :project_period_start_date => row[:project_period_start_date],
+        :project_period_end_date => row[:project_period_end_date],
+        :appl_period_start_date => row[:appl_period_start_date],
+        :appl_period_end_date => row[:appl_period_end_date],
+        :expire_fy => row[:expire_fy],
+        :sub_project_flag => row[:sub_project_flag],
+        :project_flag => row[:project_flag],
+        :i2_total_obligation => row[:i2_total_obligation],
+        :study_section => row[:study_section],
+        :percentile => row[:percentile],
+        :priority_score => row[:priority_score],
         :project_detail_id => row[:project_detail_id],
         :grant_flag => row[:grant_flag],
         :submitted => submitted,
+        :status => status,
         :tags => tags
       })
     }
@@ -180,8 +184,8 @@ class Document
 
   def self.code_import(file)
     csv = CSV.new(file.read, :headers => true, :header_converters => :symbol)
-    cats = csv.to_a.map {|row| 
-      row.to_hash 
+    cats = csv.to_a.map {|row|
+      row.to_hash
       if (row[:strategic_plan_code].split('-')[1].strip == "2013")
         # find the corresponding document by project_detail_id
         doc = Document.where({:project_detail_id=>row[:project_detail_id]}).first
@@ -200,8 +204,8 @@ class Document
 
     def self.abstract_import(file)
     csv = CSV.new(file.read, :headers => true, :header_converters => :symbol)
-    cats = csv.to_a.map {|row| 
-      row.to_hash 
+    cats = csv.to_a.map {|row|
+      row.to_hash
 
       # find the corresponding document by appl_id
       docs = Document.where({:appl_id=>row[:appl_id]})
