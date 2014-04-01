@@ -126,6 +126,7 @@ class Document
         tags << {"id"=>unclassified.id.to_s,"text"=>unclassified.name}
       end
     elsif (i>=1000 && i< 3000)
+      submitted = "additional year"
       if (i<2500)
         tags << {"id"=>aids.id.to_s,"text"=>aids.name}
       elsif (i>=2500 && i<2800)
@@ -133,6 +134,8 @@ class Document
       else
         tags << {"id"=>unclassified.id.to_s,"text"=>unclassified.name}
       end
+    elsif (i>= 3000 && i< 4000)
+      submitted = "additional year"
     else
       submitted = ""
     end
