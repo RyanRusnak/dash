@@ -1,60 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
+
 	<!-- start: Meta -->
 	<meta charset="utf-8">
 	<title>OAR Classify</title>
 	<meta name="description" content="Classification Dashboard for OAR">
 	<meta name="author" content="Łukasz Holeczek">
 	<!-- end: Meta -->
-	
+
 	<!-- start: Mobile Specific -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- end: Mobile Specific -->
-	
+
 	<!-- start: CSS -->
-	
+
 	<!-- bootstrap -->
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	
+
 	<!-- page css files -->
 	<link href="assets/css/font-awesome.min.css" rel="stylesheet">
 	<link href="assets/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
-	<link href="assets/css/fullcalendar.css" rel="stylesheet">	
+	<link href="assets/css/fullcalendar.css" rel="stylesheet">
 	<link href="assets/css/jquery.gritter.css" rel="stylesheet">
 	<link href="/js/select2/select2.css" rel="stylesheet">
 	<link href="/js/select2/select2-bootstrap.css" rel="stylesheet">
-	<link href="/css/jquery.gridster.min.css" rel="stylesheet">	
-	
+	<link href="/css/jquery.gridster.min.css" rel="stylesheet">
+
 	<!-- <link href="assets/css/glyphicons.css" rel="stylesheet"> -->
-	
+
 	<!-- main style -->
 	<link href="assets/css/style.min.css" rel="stylesheet">
+	<link href="/css/nv.d3.min.css" rel="stylesheet">
 
 	<!--[if lt IE 9 ]>
 		<link href="assets/css/style-ie.css" rel="stylesheet">
 	<![endif]-->
-	
+
 	<!-- end: CSS -->
-	
+
 
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
-		
+
 	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<script src="assets/js/respond.min.js"></script>
-		
-	<![endif]-->
 
+	<![endif]-->
+<!--  -->`
 	<!-- start: Favicon -->
 	<link rel="shortcut icon" href="http://localhost:8888/bootstrap/perfectum2/img/favicon.ico">
 	<!-- end: Favicon -->
-		
+
 </head>
 
 <body>
-	
+
 	<!-- start: Header -->
 	<div class="navbar">
 		<div class="container">
@@ -64,7 +65,7 @@
 			      <span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="index.html"> <img alt="Perfectum Dashboard" src="assets/img/logo20.png" /> <span>OAR Dashboard</span></a>
-							
+
 			<!-- start: Header Menu -->
 			<div class="header-nav">
 				<ul class="nav navbar-nav pull-right">
@@ -75,60 +76,60 @@
 						<ul class="dropdown-menu notifications">
 							<li>
 								<span class="dropdown-menu-title">You have 11 notifications</span>
-							</li>	
+							</li>
                         	<li>
                                 <a href="index.html#">
-									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">1 min</span> 
+									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">1 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">7 min</span> 
+									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">7 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">8 min</span> 
+									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">8 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">16 min</span> 
+									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">16 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">36 min</span> 
+									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">36 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-shopping-cart"></i> <span class="message">2 items sold</span> <span class="time">1 hour</span> 
+									<i class="fa fa-shopping-cart"></i> <span class="message">2 items sold</span> <span class="time">1 hour</span>
                                 </a>
                             </li>
 							<li class="warning">
                                 <a href="index.html#">
-									<i class="fa fa-user"></i> <span class="message">User deleted account</span> <span class="time">2 hour</span> 
+									<i class="fa fa-user"></i> <span class="message">User deleted account</span> <span class="time">2 hour</span>
                                 </a>
                             </li>
 							<li class="warning">
                                 <a href="index.html#">
-									<i class="fa fa-shopping-cart"></i> <span class="message">Transaction was canceled</span> <span class="time">6 hour</span> 
+									<i class="fa fa-shopping-cart"></i> <span class="message">Transaction was canceled</span> <span class="time">6 hour</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">yesterday</span> 
+									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">yesterday</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">yesterday</span> 
+									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">yesterday</span>
                                 </a>
                             </li>
                             <li>
                         		<a class="dropdown-menu-sub-footer">View all notifications</a>
-							</li>	
+							</li>
 						</ul>
 					</li>
 					<!-- start: Notifications Dropdown -->
@@ -146,7 +147,7 @@
 										<span class="title">iOS Development</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">80</div> 
+                                    <div class="taskProgress progressSlim progressYellow">80</div>
                                 </a>
                             </li>
                             <li>
@@ -155,7 +156,7 @@
 										<span class="title">Android Development</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">47</div> 
+                                    <div class="taskProgress progressSlim progressYellow">47</div>
                                 </a>
                             </li>
                             <li>
@@ -164,7 +165,7 @@
 										<span class="title">Django Project For Google</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">32</div> 
+                                    <div class="taskProgress progressSlim progressYellow">32</div>
                                 </a>
                             </li>
 							<li>
@@ -173,7 +174,7 @@
 										<span class="title">SEO for new sites</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">63</div> 
+                                    <div class="taskProgress progressSlim progressYellow">63</div>
                                 </a>
                             </li>
                             <li>
@@ -182,12 +183,12 @@
 										<span class="title">New blog posts</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">80</div> 
+                                    <div class="taskProgress progressSlim progressYellow">80</div>
                                 </a>
                             </li>
 							<li>
                         		<a class="dropdown-menu-sub-footer">View all tasks</a>
-							</li>	
+							</li>
 						</ul>
 					</li>
 					<!-- end: Notifications Dropdown -->
@@ -199,7 +200,7 @@
 						<ul class="dropdown-menu messages">
 							<li>
 								<span class="dropdown-menu-title">You have 9 messages</span>
-							</li>	
+							</li>
                         	<li>
                                 <a href="index.html#">
 									<span class="avatar"><img src="assets/img/avatar.jpg" alt="Avatar"></span>
@@ -213,7 +214,7 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -229,7 +230,7 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -245,7 +246,7 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
 							<li>
@@ -261,7 +262,7 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -277,12 +278,12 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
 							<li>
                         		<a class="dropdown-menu-sub-footer">View all messages</a>
-							</li>	
+							</li>
 						</ul>
 					</li>
 					<!-- end: Message Dropdown -->
@@ -306,11 +307,11 @@
 				</ul>
 			</div>
 			<!-- end: Header Menu -->
-			
+
 		</div>
 	</div>
 	<!-- start: Header -->
-	
+
 		<div class="container">
 		<div class="row">
 					<!-- start: Main Menu -->
@@ -319,25 +320,24 @@
 					<ul class="nav nav-tabs nav-stacked main-menu">
 						<li><a href="index.html"><i class="fa fa-home icon"></i><span class="hidden-sm"> Dashboard</span></a></li>
 						<li><a href="grants_page.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Grants</span></a></li>
-						<li><a href="codes_page.html"><i class="fa fa-edit"></i><span class="hidden-sm"> Codes</span></a></li>
-						<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm"> Buckets</span></a></li>
-						<li><a href="login.html"><i class="fa fa-lock"></i><span class="hidden-sm"> Find a Grant</span></a></li>
-						<li><a href="ui.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Upload a Grant</span></a></li>
+						<li><a href="tags_page.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Tags</span></a></li>
+						<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm"> Impac II Analysis</span></a></li>
+						<li><a href="ui.html"><i class="fa fa-eye"></i><span class="hidden-sm"> Announcements</span></a></li>
 					</ul>
 				</div><!--/.well -->
 			</div><!--/col-->
 			<!-- end: Main Menu -->
-			
+
 			<noscript>
 				<div class="alert alert-block col-sm-10">
 					<h4 class="alert-heading">Warning!</h4>
 					<p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
 				</div>
 			</noscript>
-			
+
 			<div id="content" class="col-sm-10">
 			<!-- start: Content -->
-			
+
 			<div>
 				<hr>
 				<ul class="breadcrumb">
@@ -353,7 +353,10 @@
 				    <li data-row="1" data-col="1" data-sizex="4" data-sizey="2">
 				      <div class="panel panel-default">
 				        <div class="panel-heading"><h3 class="panel-title">Top Graphs</h3></div>
-				        <div class="panel-body"></div>
+				        <div class="panel-body">
+									<div id="code-funding-chart" class="chart pie" data-id="code">
+									<svg style="height:200px;"></svg></div>
+								</div>
 				      </div>
 				    </li>
 				    <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
@@ -369,7 +372,10 @@
 							<form id="grant-form">
 								<label>Name:</label><div id="grant-name"></div>
 								<label>Principal Investigator:</label><div id="pi"></div>
-								<label>Status:</label><div id="grant-status"></div>
+								<label>Status:</label><select id="grant-status" name="status">
+									<option>Reviewed</option>
+									<option>Unreviewed</option>
+								</select>
 								<label>Table of Documents:</label>
 								<label>Tags:</label><input type="hidden" id="grant-tags">
 								<!-- <label>Text:</label><input id="grant-text" type="text" name="body"> -->
@@ -381,15 +387,15 @@
 				  </ul>
 				</div>
 			</div>
-			
-			
+
+
 			<hr>
-			
-      
+
+
 					<!-- end: Content -->
 			</div><!--/#content.span10-->
 				</div><!--/fluid-row-->
-				
+
 			<div class="modal fade" id="myModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -407,16 +413,16 @@
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
-		
+
 		<div class="clearfix"></div>
-		
+
 		<footer>
 			<p>
 				<span style="text-align:left;float:left">&copy; 2014 Mobomo. <a href="http://mobomo.com">Mobomo.com</a> by Mobomo</span>
 				<span class="hidden-phone" style="text-align:right;float:right">Powered by: <a href="http://bootstrapmaster.com/demo/perfectum/" alt="Bootstrap Admin Templates">Perfectum Dashboard</a></span>
 			</p>
 		</footer>
-				
+
 	</div><!--/.fluid-container-->
 
 
@@ -429,9 +435,9 @@
 	<!--<![endif]-->
 
 	<!--[if IE]>
-	
+
 		<script src="assets/js/jquery-1.10.2.min.js"></script>
-	
+
 	<![endif]-->
 
 	<!--[if !IE]>-->
@@ -445,16 +451,18 @@
 	<!--<![endif]-->
 
 	<!--[if IE]>
-	
+
 		<script type="text/javascript">
 	 	window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
 		</script>
-		
+
 	<![endif]-->
 	<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
-	
-	
+	<script src="/js/d3.min.js"></script>
+	<script src="/js/nv.d3.min.js"></script>
+
+
 	<!-- page scripts -->
 	<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="assets/js/jquery.knob.modified.min.js"></script>
@@ -467,11 +475,11 @@
 	<script src="assets/js/jquery.sparkline.min.js"></script>
 	<script src="assets/js/fullcalendar.min.js"></script>
 	<script src="assets/js/jquery.gritter.min.js"></script>
-	
+
 	<!-- theme scripts -->
 	<script src="assets/js/default.min.js"></script>
 	<script src="assets/js/core.min.js"></script>
-	
+
 	<!-- inline scripts related to this page -->
 	<script src="/js/purl.js"></script>
 	<script src="/js//select2/select2.min.js"></script>
@@ -482,6 +490,15 @@
 
 <script type="text/javascript">
 var docId = $.url().param('id');
+var codeFundingData;
+
+$.get('/documents/'+docId+'.json?constrain_by=code', function(data){
+	console.log(data);
+	codeFundingData=data;
+	drawPieChart(data, 'code-funding-chart');
+});
+
+
 $.get('/tags', function(data){
 	var select2Array = [];
 	 for(var i=0;i<data.length;i+=1){
@@ -493,7 +510,7 @@ $.get('/tags', function(data){
 		console.log(grant);
 
 		$("#grant-name").text(grant.project_title);
-		$("#grant-status").text(grant.status);
+		$("#grant-status").val(grant.status);
 		$("#pi").text(grant.investigator);
 		// $("#grant-tags").val(grant.codes);
 		// $("#grant-text").val(grant.body);
@@ -516,7 +533,7 @@ $("#update-grant").click(function(){
 	  type: 'PUT',
 	  data: {'document': datastring},
 	  success: function(response) {
-	    console.log(response);
+	    // console.log(response);
 	  }
 	});
 
@@ -544,6 +561,63 @@ $("#feed").restObjectTable({
 
 
 //================================================================ helper functions
+
+function drawPieChart(data,divId,donut){
+
+		nv.addGraph(function() {
+			var chart = nv.models.pieChart()
+			.x(function(d) { return d.label })
+			.y(function(d) { return d.value })
+			.showLabels(true)     //Display pie labels
+			.labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+			.labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+			.donut(donut)          //Turn on Donut mode. Makes pie chart look tasty!
+			.donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+			;
+
+		d3.select('#'+divId+' svg')
+				.datum(data)
+				.transition().duration(350)
+				.call(chart);
+
+		chart.pie.dispatch.on('elementClick', function(e){
+			// console.log('element: ' + e.value);
+			console.dir(e.point);
+			window.location = "/grants_page.html?constrain_by=code&with="+ e.point.label;
+		});
+
+	return chart;
+	});
+
+}
+
+function resizeChart(widget){
+	widget.find('svg').width(widget.width()-20);
+	// widget.height(widget.height()-80);
+	widget.find('svg').height(widget.height()-60);
+	var chart = widget.find('.chart');
+	if (chart.hasClass('bar')) {
+		drawBarChart(getData(chart), chart.attr('id'));
+	}else if(chart.hasClass('pie')){
+		drawPieChart(getData(chart), chart.attr('id'), false);
+	}else if(chart.hasClass('donut')){
+		drawPieChart(getData(chart), chart.attr('id'), true);
+	};
+}
+
+function getData(c){
+	var dataType = c.attr('data-id');
+	if (dataType == 'code'){
+		return codeFundingData;
+	}else if (dataType == 'expiringDollars'){
+		return dollarsExpiringData;
+	}else if(dataType == 'status'){
+		return statusData;
+	}else{
+		return yearStartingData;
+	}
+}
+
 $.fn.serializeObject = function(){
 
         var self = this,
@@ -611,6 +685,6 @@ $.fn.serializeObject = function(){
 
 </script>
 		<!-- end: JavaScript-->
-	
+
 </body>
 </html>

@@ -16,6 +16,9 @@ class DocumentsController < ApplicationController
       when "year_expiring"
         @docs_with_expire = Document.where({:expire_fy => { "$ne" => nil }, :submitted => "submitted"})
         @documents = Document.short_list(@docs_with_expire, "expire_fy")
+      when "additional_submissions"
+        @add_docs = Document.where(:submitted => "additional year")
+        @documents = Document.tag_list(@add_docs, "tags")
       when "year_expiring_verbose"
         @documents = @documents.group_by{|document|
           document.project_period_end_date.to_date.year rescue nil
@@ -71,7 +74,18 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
-    render json: @document
+    constraint = params[:with] rescue nil
+    constrained_by = params[:constrain_by] rescue nil
+
+    case constrained_by
+    when "code"
+      @codes = @document.codes.map { |c|
+        {:label => c.code, :value => c.strategic_plan_dollars}
+      }
+      render json: @codes
+    else
+      render json: @document
+    end
   end
 
   # GET /documents/new

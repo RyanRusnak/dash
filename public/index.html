@@ -1,58 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
+
 	<!-- start: Meta -->
 	<meta charset="utf-8">
 	<title>OAR Classify</title>
 	<meta name="description" content="Classification Dashboard for OAR">
 	<meta name="author" content="Łukasz Holeczek">
 	<!-- end: Meta -->
-	
+
 	<!-- start: Mobile Specific -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- end: Mobile Specific -->
-	
+
 	<!-- start: CSS -->
-	
+
 	<!-- bootstrap -->
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	
+
 	<!-- page css files -->
 	<link href="assets/css/font-awesome.min.css" rel="stylesheet">
 	<link href="assets/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
-	<link href="assets/css/fullcalendar.css" rel="stylesheet">	
-	<link href="assets/css/jquery.gritter.css" rel="stylesheet">	
+	<link href="assets/css/fullcalendar.css" rel="stylesheet">
+	<link href="assets/css/jquery.gritter.css" rel="stylesheet">
 	<!-- <link href="assets/css/glyphicons.css" rel="stylesheet"> -->
-	
+
 	<!-- main style -->
 	<link href="assets/css/style.min.css" rel="stylesheet">
 
-	<link href="/css/jquery.gridster.min.css" rel="stylesheet">	
+	<link href="/css/jquery.gridster.min.css" rel="stylesheet">
 	<link href="/css/nv.d3.min.css" rel="stylesheet">
 	<!--[if lt IE 9 ]>
 		<link href="assets/css/style-ie.css" rel="stylesheet">
 	<![endif]-->
-	
+
 	<!-- end: CSS -->
-	
+
 
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
-		
+
 	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<script src="assets/js/respond.min.js"></script>
-		
+
 	<![endif]-->
 
 	<!-- start: Favicon -->
 	<link rel="shortcut icon" href="http://localhost:8888/bootstrap/perfectum2/img/favicon.ico">
 	<!-- end: Favicon -->
-		
+
 </head>
 
 <body>
-	
+
 	<!-- start: Header -->
 	<div class="navbar">
 		<div class="container">
@@ -62,7 +62,7 @@
 			      <span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="index.html"> <img alt="Perfectum Dashboard" src="assets/img/logo20.png" /> <span>OAR Dashboard</span></a>
-							
+
 			<!-- start: Header Menu -->
 			<div class="header-nav">
 				<ul class="nav navbar-nav pull-right">
@@ -73,60 +73,60 @@
 						<ul class="dropdown-menu notifications">
 							<li>
 								<span class="dropdown-menu-title">You have 11 notifications</span>
-							</li>	
+							</li>
                         	<li>
                                 <a href="index.html#">
-									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">1 min</span> 
+									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">1 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">7 min</span> 
+									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">7 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">8 min</span> 
+									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">8 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">16 min</span> 
+									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">16 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">36 min</span> 
+									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">36 min</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-shopping-cart"></i> <span class="message">2 items sold</span> <span class="time">1 hour</span> 
+									<i class="fa fa-shopping-cart"></i> <span class="message">2 items sold</span> <span class="time">1 hour</span>
                                 </a>
                             </li>
 							<li class="warning">
                                 <a href="index.html#">
-									<i class="fa fa-user"></i> <span class="message">User deleted account</span> <span class="time">2 hour</span> 
+									<i class="fa fa-user"></i> <span class="message">User deleted account</span> <span class="time">2 hour</span>
                                 </a>
                             </li>
 							<li class="warning">
                                 <a href="index.html#">
-									<i class="fa fa-shopping-cart"></i> <span class="message">Transaction was canceled</span> <span class="time">6 hour</span> 
+									<i class="fa fa-shopping-cart"></i> <span class="message">Transaction was canceled</span> <span class="time">6 hour</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">yesterday</span> 
+									<i class="fa fa-comment"></i> <span class="message">New comment</span> <span class="time">yesterday</span>
                                 </a>
                             </li>
 							<li>
                                 <a href="index.html#">
-									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">yesterday</span> 
+									<i class="fa fa-user"></i> <span class="message">New user registration</span> <span class="time">yesterday</span>
                                 </a>
                             </li>
                             <li>
                         		<a class="dropdown-menu-sub-footer">View all notifications</a>
-							</li>	
+							</li>
 						</ul>
 					</li>
 					<!-- start: Notifications Dropdown -->
@@ -144,7 +144,7 @@
 										<span class="title">iOS Development</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">80</div> 
+                                    <div class="taskProgress progressSlim progressYellow">80</div>
                                 </a>
                             </li>
                             <li>
@@ -153,7 +153,7 @@
 										<span class="title">Android Development</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">47</div> 
+                                    <div class="taskProgress progressSlim progressYellow">47</div>
                                 </a>
                             </li>
                             <li>
@@ -162,7 +162,7 @@
 										<span class="title">Django Project For Google</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">32</div> 
+                                    <div class="taskProgress progressSlim progressYellow">32</div>
                                 </a>
                             </li>
 							<li>
@@ -171,7 +171,7 @@
 										<span class="title">SEO for new sites</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">63</div> 
+                                    <div class="taskProgress progressSlim progressYellow">63</div>
                                 </a>
                             </li>
                             <li>
@@ -180,12 +180,12 @@
 										<span class="title">New blog posts</span>
 										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow">80</div> 
+                                    <div class="taskProgress progressSlim progressYellow">80</div>
                                 </a>
                             </li>
 							<li>
                         		<a class="dropdown-menu-sub-footer">View all tasks</a>
-							</li>	
+							</li>
 						</ul>
 					</li>
 					<!-- end: Notifications Dropdown -->
@@ -197,7 +197,7 @@
 						<ul class="dropdown-menu messages">
 							<li>
 								<span class="dropdown-menu-title">You have 9 messages</span>
-							</li>	
+							</li>
                         	<li>
                                 <a href="index.html#">
 									<span class="avatar"><img src="assets/img/avatar.jpg" alt="Avatar"></span>
@@ -211,7 +211,7 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -227,7 +227,7 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -243,7 +243,7 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
 							<li>
@@ -259,7 +259,7 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -275,12 +275,12 @@
 									</span>
                                     <span class="message">
                                         Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                    </span>  
+                                    </span>
                                 </a>
                             </li>
 							<li>
                         		<a class="dropdown-menu-sub-footer">View all messages</a>
-							</li>	
+							</li>
 						</ul>
 					</li>
 					<!-- end: Message Dropdown -->
@@ -304,11 +304,11 @@
 				</ul>
 			</div>
 			<!-- end: Header Menu -->
-			
+
 		</div>
 	</div>
 	<!-- start: Header -->
-	
+
 		<div class="container">
 		<div class="row">
 					<!-- start: Main Menu -->
@@ -324,17 +324,17 @@
 				</div><!--/.well -->
 			</div><!--/col-->
 			<!-- end: Main Menu -->
-			
+
 			<noscript>
 				<div class="alert alert-block col-sm-10">
 					<h4 class="alert-heading">Warning!</h4>
 					<p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
 				</div>
 			</noscript>
-			
+
 			<div id="content" class="col-sm-10">
 			<!-- start: Content -->
-			
+
 			<div>
 				<hr>
 				<ul class="breadcrumb">
@@ -343,9 +343,9 @@
 				</ul>
 				<hr>
 			</div>
-			
+
 			<div class="row circleStats">
-				
+
 				<div class="col-md-2 col-sm-4 col-xs-6">
                 	<div class="circleStatsItem red">
 						<i class="fa fa-bullseye"></i>
@@ -355,7 +355,7 @@
                 	</div>
 					<div class="box-small-title">Grants Funded</div>
 				</div><!--/col-->
-				
+
 				<div class="col-md-2 col-sm-4 col-xs-6">
                 	<div class="circleStatsItem blue">
                     	<i class="fa  fa-bullhorn"></i>
@@ -365,7 +365,7 @@
                 	</div>
 					<div class="box-small-title">Total Budget Spent</div>
 				</div><!--/col-->
-				
+
 				<div class="col-md-2 col-sm-4 col-xs-6">
 					<div class="circleStatsItem yellow">
                     	<i class="fa  fa-user"></i>
@@ -375,7 +375,7 @@
                 	</div>
 					<div class="box-small-title">New users</div>
 				</div><!--/col-->
-				
+
 				<div class="col-md-2 col-sm-4 col-xs-6">
 					<div class="circleStatsItem pink">
                     	<i class="fa  fa-globe"></i>
@@ -385,7 +385,7 @@
                 	</div>
 					<div class="box-small-title">Visits</div>
 				</div><!--/col-->
-				
+
 				<div class="col-md-2 col-sm-4 col-xs-6">
                 	<div class="circleStatsItem green">
                     	<i class="fa  fa-bar-chart-o"></i>
@@ -395,7 +395,7 @@
                 	</div>
 					<div class="box-small-title">Income</div>
 				</div><!--/col-->
-				
+
 				<div class="col-md-2 col-sm-4 col-xs-6">
 					<div class="circleStatsItem lightorange">
                     	<i class="fa  fa-shopping-cart"></i>
@@ -407,7 +407,7 @@
 				</div><!--/col-->
 
 			</div><!--/row-->
-			
+
 			<hr>
 
 			<div class="row">
@@ -443,15 +443,21 @@
 				        <div class="panel-body"><div id="chart" class="chart bar" data-id="expiring"><svg style="height:200px; width:200px;"></svg></div></div>
 				      </div>
 				    </li>
+						<li data-row="3" data-col="1" data-sizex="2" data-sizey="2">
+							<div class="panel panel-default">
+								<div class="panel-heading"><h3 class="panel-title">Next Year Submissions</h3></div>
+								<div class="panel-body"><div id="chart6" class="chart pie" data-id="additional"><svg style="height:200px; width:200px;"></svg></div></div>
+							</div>
+						</li>
 				  </ul>
 				</div>
 			</div>
-			
-      
+
+
 					<!-- end: Content -->
 			</div><!--/#content.span10-->
 				</div><!--/fluid-row-->
-				
+
 			<div class="modal fade" id="myModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -469,16 +475,16 @@
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
-		
+
 		<div class="clearfix"></div>
-		
+
 		<footer>
 			<p>
 				<span style="text-align:left;float:left">&copy; 2014 Mobomo. <a href="http://mobomo.com">Mobomo.com</a> by Mobomo</span>
 				<span class="hidden-phone" style="text-align:right;float:right">Powered by: <a href="http://bootstrapmaster.com/demo/perfectum/" alt="Bootstrap Admin Templates">Perfectum Dashboard</a></span>
 			</p>
 		</footer>
-				
+
 	</div><!--/.fluid-container-->
 
 	<!-- start: JavaScript-->
@@ -489,9 +495,9 @@
 	<!--<![endif]-->
 
 	<!--[if IE]>
-	
+
 		<script src="assets/js/jquery-1.10.2.min.js"></script>
-	
+
 	<![endif]-->
 
 	<!--[if !IE]>-->
@@ -503,11 +509,11 @@
 	<!--<![endif]-->
 
 	<!--[if IE]>
-	
+
 		<script type="text/javascript">
 	 	window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
 		</script>
-		
+
 	<![endif]-->
 	<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
@@ -526,6 +532,7 @@ var dollarsExpiringData;
 var yearExpiringData;
 var statusData;
 var lastUpdatedData;
+var additionalSubmissionData;
 $.get('/documents.json?constrain_by=all_tags', function(data){
   yearStartingData=data;
   drawPieChart(data, 'chart4');
@@ -549,9 +556,13 @@ $.get('/documents.json?constrain_by=status&with=Unreviewed', function(data){
 });
 $.get('/documents.json?constrain_by=last_updated', function(data){
 	lastUpdatedData = data;
-  	drawBarChart(data['documents'], 'chart5');
+  drawBarChart(data['documents'], 'chart5');
 });
-
+$.get('/documents.json?constrain_by=additional_submissions', function(data){
+	additionalSubmissionData = data;
+	console.log(data);
+		drawPieChart(data, 'chart6');
+});
 
 function drawBarChart(data,divId){
   nv.addGraph(function() {
@@ -568,12 +579,12 @@ function drawBarChart(data,divId){
         .datum([{key: 'Cumulative Return', values: data}])
         .call(chart);
 
-    chart.discretebar.dispatch.on('elementClick', function(e){ 
-      // console.log('element: ' + e.value); 
-      console.dir(e.point); 
+    chart.discretebar.dispatch.on('elementClick', function(e){
+      // console.log('element: ' + e.value);
+      console.dir(e.point);
       window.location = "/grants_page.html?constrain_by=year&with="+ e.point.label;
     });
-   
+
     return chart;
   });
 }
@@ -590,18 +601,18 @@ function drawPieChart(data,divId,donut){
       .donut(donut)          //Turn on Donut mode. Makes pie chart look tasty!
       .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
       ;
- 
+
     d3.select('#'+divId+' svg')
         .datum(data)
         .transition().duration(350)
         .call(chart);
 
-    chart.pie.dispatch.on('elementClick', function(e){ 
-      // console.log('element: ' + e.value); 
-      console.dir(e.point); 
+    chart.pie.dispatch.on('elementClick', function(e){
+      // console.log('element: ' + e.value);
+      console.dir(e.point);
       window.location = "/grants_page.html?constrain_by=tag&with="+ e.point.label;
     });
- 
+
   return chart;
   });
 
@@ -619,18 +630,18 @@ function drawStatusPieChart(data,divId,donut){
       .donut(donut)          //Turn on Donut mode. Makes pie chart look tasty!
       .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
       ;
- 
+
     d3.select('#'+divId+' svg')
         .datum(data)
         .transition().duration(350)
         .call(chart);
 
-    chart.pie.dispatch.on('elementClick', function(e){ 
-      // console.log('element: ' + e.value); 
-      console.dir(e.point); 
+    chart.pie.dispatch.on('elementClick', function(e){
+      // console.log('element: ' + e.value);
+      console.dir(e.point);
       window.location = "/grants_page.html?constrain_by=tag&with="+ e.point.label+"&review_type=unreviewed";
     });
- 
+
   return chart;
   });
 
@@ -669,16 +680,18 @@ function getData(c){
     return dollarsExpiringData;
   }else if(dataType == 'status'){
     return statusData;
-  }else{
+  }else if(dataType == 'additional'){
+		return additionalSubmissionData;
+	}else{
     return yearStartingData;
-  }  
+  }
 }
 
 
 
 	</script>
-	
-	
+
+
 	<!-- page scripts -->
 	<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="assets/js/jquery.knob.modified.min.js"></script>
@@ -691,15 +704,15 @@ function getData(c){
 	<script src="assets/js/jquery.sparkline.min.js"></script>
 	<script src="assets/js/fullcalendar.min.js"></script>
 	<script src="assets/js/jquery.gritter.min.js"></script>
-	
+
 	<!-- theme scripts -->
 	<script src="assets/js/default.min.js"></script>
 	<script src="assets/js/core.min.js"></script>
-	
+
 	<!-- inline scripts related to this page -->
 	<script src="assets/js/pages/index.js"></script>
-	
+
 		<!-- end: JavaScript-->
-	
+
 </body>
 </html>

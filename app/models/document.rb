@@ -62,6 +62,21 @@ class Document
         @documents = totals.sort_by { |x, y| x[:label] }
   end
 
+  def self.codes_by_percentage(documents, att_name)
+    documents = documents.group_by{ |document|
+          document.read_attribute(att_name)
+        }
+        totals = []
+        documents.keys.each do |key|
+          sub = {}
+          sub[:label] = key
+          logger.debug(key)
+          sub[:value] = documents[key].count
+          totals << sub
+        end
+        @documents = totals.sort_by { |x, y| x[:label] }
+  end
+
   def self.short_list_dollars(documents, att_name)
     documents = documents.group_by{ |document|
           document.read_attribute(att_name)
@@ -96,12 +111,14 @@ class Document
         }
         totals = []
         documents.keys.each do |key|
-          sub = {}
-          sub[:label] = key
-          sub[:value] = documents[key].count
-          totals << sub
+          if (key != nil)
+            sub = {}
+            sub[:label] = key
+            sub[:value] = documents[key].count
+            totals << sub
+          end
         end
-        @documents = totals.sort_by { |x, y| x[:label] }
+        @documents = totals
   end
 
   def self.import(file)
