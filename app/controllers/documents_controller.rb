@@ -36,6 +36,13 @@ class DocumentsController < ApplicationController
         @documents = @documents.all.take(100)
       when "year"
         @documents = {:documents => @documents.where({:expire_fy => constraint}).take(100)}
+      when "code"
+        code_docs = Document.includes(:codes).select { |d|
+            d.codes.each {|c|
+              c.code == constraint
+          }
+        }
+        @documents = {:documents => code_docs.take(100)}
       when "all_tags"
         @documents = Document.tag_list(@documents, "tags")
       when "tag"

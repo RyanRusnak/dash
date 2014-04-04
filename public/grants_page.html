@@ -436,6 +436,7 @@
 				var constraintParam = $.url().param('with');
 				if (constraint){
 					$.get('/documents.json?constrain_by=' + constraint + '&with=' + constraintParam, function(data){
+						console.log(data);
 							$("#codes").basicTable({
 								'model':'document',
 								'dataObject': data['documents'],
